@@ -11,21 +11,22 @@ class LavirintP(QMainWindow):
     def __init__(self):
 
         super(LavirintP, self).__init__()
+        self.InitStart()
+        self.show()
+
+    def InitStart(self):
         self.resize(800, 600)
         self.center()
         self.setWindowTitle("Cub Chase")
         self.center()
         hbox = QHBoxLayout(self)
         pixmap = QPixmap('images\pozadinaProba.png')
-
         lbl = QLabel(self)
         lbl.setPixmap(pixmap)
-        QLabel.setGeometry(lbl,0,-6,800,600)
+        QLabel.setGeometry(lbl, 0, -6, 800, 600)
         hbox.addWidget(lbl)
         self.resize(pixmap.width(), pixmap.height())
         self.setLayout(hbox)
-
-        self.show()
 
     def center(self):
 
