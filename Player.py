@@ -35,7 +35,12 @@ class Player(QFrame):
             self.pX = x
             self.pY = y
 
-            self.LabelPlayer(x, y)
+            PixmapPlayer = QPixmap(self.Picture)
+            PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
+
+            self.LabelPlayer.setPixmap(PixmapResizedPlayer)
+
+            self.LabelPlayer.move(x, y)
 
 
 
