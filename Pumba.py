@@ -35,7 +35,7 @@ class Pumba(QFrame):
             self.pX = x
             self.pY = y
 
-            self.LabelPumba(x, y)
+            self.LabelPumba.move(x, y)
 
 
 
