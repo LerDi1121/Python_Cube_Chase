@@ -4,8 +4,8 @@ from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal
 from PyQt5.QtGui import *
 
 class Timon(QFrame):
-        PumbaWidth = 40
-        PumbaHeight = 40
+        TimonWidth = 40
+        TimonHeight = 40
         pX = 10
         pY = 20
 
@@ -13,7 +13,7 @@ class Timon(QFrame):
         Picture = ""
 
         def __init__(self, parent, x, y, picture):
-            super(parent,self).__init__()
+            super().__init__(parent)
 
             self.initTimon(parent, x, y, picture)
 
@@ -26,9 +26,9 @@ class Timon(QFrame):
             self.LabelTimon = QLabel(parent)
 
             PixmapTimon = QPixmap(picture)
-            PixmapResizedTimon = PixmapTimon.scaled(self.TimonWidth,self.TimonHeight)
+            PixmapResizedTimon = PixmapTimon.scaled(self.TimonWidth, self.TimonHeight)
 
-            self.LabelTimon.setPixmap(PixmapResizedPumba)
+            self.LabelTimon.setPixmap(PixmapResizedTimon)
             self.LabelTimon.move(x, y)
 
         def updatePosition(self, x, y):

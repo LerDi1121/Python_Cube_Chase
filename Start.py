@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import QMainWindow, QFrame, QDesktopWidget, QApplication, QWidget, QHBoxLayout, QLabel
 from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal
 from PyQt5.QtGui import *
+from Player  import *
+from Timon import *
+from Pumba import *
 
 import sys
 
@@ -12,6 +15,10 @@ class LavirintP(QMainWindow):
 
         super(LavirintP, self).__init__()
         self.InitStart()
+        self.PlayerDist = {}
+        self.EnemyPumba = None
+        self.EnemyTimon = None
+        self.createPlayerAndEnemy()
         self.show()
 
     def InitStart(self):
@@ -28,11 +35,16 @@ class LavirintP(QMainWindow):
         self.resize(pixmap.width(), pixmap.height())
         self.setLayout(hbox)
 
+    def createPlayerAndEnemy(self):
+        self.PlayerDist[0] = Player(self, 100, 100, 'images\Simba.png')
+        self.PlayerDist[1] = Player(self, 100, 200, 'images\imgNela.png')
+        self.EnemyTimon = Timon(self, 200, 100, 'images\imgTimon.png')
+        self.EnemyPumba = Pumba(self, 200, 200, 'images\pumba.png')
     def center(self):
 
         screen = QDesktopWidget().screenGeometry()
         size = self.geometry()
-        self.move((screen.width() - size.width()) / 2,(screen.height() - size.height()) / 2)
+        self.move((screen.width() - size.width()) / 2, (screen.height() - size.height()) / 2)
 
 
 if __name__ == '__main__':

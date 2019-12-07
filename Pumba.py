@@ -13,7 +13,7 @@ class Pumba(QFrame):
         Picture = ""
 
         def __init__(self, parent, x, y, picture):
-            super(parent,self).__init__()
+            super().__init__(parent)
 
             self.initPumba(parent, x, y, picture)
 
