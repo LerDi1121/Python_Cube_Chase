@@ -4,8 +4,13 @@ from PyQt5.QtGui import *
 from Player  import *
 from Timon import *
 from Pumba import *
-
+from threading import Thread, Timer
+from Command import *
+import time
 import sys
+import keyboard
+
+import multiprocessing as mp
 
 from PyQt5.uic.properties import QtGui
 
@@ -19,6 +24,7 @@ class LavirintP(QMainWindow):
         self.EnemyPumba = None
         self.EnemyTimon = None
         self.createPlayerAndEnemy()
+        Thread(target=self.keyEvent).start()    #KeyPressThread
         self.show()
 
     def InitStart(self):
@@ -40,11 +46,45 @@ class LavirintP(QMainWindow):
         self.PlayerDist[1] = Player(self, 100, 200, 'images\imgNela.png')
         self.EnemyTimon = Timon(self, 200, 100, 'images\imgTimon.png')
         self.EnemyPumba = Pumba(self, 200, 200, 'images\pumba.png')
-    def center(self):
 
+    def center(self):
         screen = QDesktopWidget().screenGeometry()
         size = self.geometry()
         self.move((screen.width() - size.width()) / 2, (screen.height() - size.height()) / 2)
+
+
+    def keyEvent(self):
+        while True:
+            try:
+                if keyboard.is_pressed('left'):
+                    self.tryMove(self.PlayerDist[0], myCommand.Left)
+                elif keyboard.is_pressed('right'):
+                    self.tryMove(self.PlayerDist[0], myCommand.Right)
+                elif keyboard.is_pressed('up'):
+                    self.tryMove(self.PlayerDist[0], myCommand.Up)
+                elif keyboard.is_pressed('down'):
+                    self.tryMove(self.PlayerDist[0], myCommand.Down)
+                elif keyboard.is_pressed('escape'):
+                    self.close()
+            except:
+                print('Neko drugo dugme...')
+            time.sleep(0.05)
+
+    def tryMove(self, Player, KeyStroke):
+        newX = Player.pX
+        newY = Player.pY
+
+    if Player.CanMove == True:
+        if KeyStroke == myCommand.Left:
+            newX = Player.pX - 20
+        elif KeyStroke == myCommand.Right:
+            newX = Player.pX + 20
+        elif KeyStroke == myCommand.Up:
+            newY = Player.pY - 20
+        elif KeyStroke == myCommand.Down:
+            newY = Player.pY + 20
+
+    Player.updatePosition(newX, newY)
 
 
 if __name__ == '__main__':

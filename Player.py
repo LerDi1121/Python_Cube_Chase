@@ -11,13 +11,16 @@ class Player(QFrame):
 
         LabelPlayer = 0
         Picture = ""
+        ID = 0
+        CanMove = True
+        IsAlive = True
 
-        def __init__(self, parent, x, y, picture):
+        def __init__(self, parent, x, y, picture, id):
             super().__init__(parent)
 
-            self.initPlayer(parent, x, y, picture)
+            self.initPlayer(parent, x, y, picture, id)
 
-        def initPlayer(self, parent, x, y, picture):
+        def initPlayer(self, parent, x, y, picture, id):
             self.resize(800, 600)
             self.pX = x
             self.pY = y
