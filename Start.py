@@ -42,8 +42,8 @@ class LavirintP(QMainWindow):
         self.setLayout(hbox)
 
     def createPlayerAndEnemy(self):
-        self.PlayerDist[0] = Player(self, 100, 100, 'images\Simba.png')
-        self.PlayerDist[1] = Player(self, 100, 200, 'images\imgNela.png')
+        self.PlayerDist[0] = Player(self, 100, 100, 'images\Simba.png', 0)
+        self.PlayerDist[1] = Player(self, 100, 200, 'images\imgNela.png', 1)
         self.EnemyTimon = Timon(self, 200, 100, 'images\imgTimon.png')
         self.EnemyPumba = Pumba(self, 200, 200, 'images\pumba.png')
 
@@ -74,17 +74,17 @@ class LavirintP(QMainWindow):
         newX = Player.pX
         newY = Player.pY
 
-    if Player.CanMove == True:
-        if KeyStroke == myCommand.Left:
-            newX = Player.pX - 20
-        elif KeyStroke == myCommand.Right:
-            newX = Player.pX + 20
-        elif KeyStroke == myCommand.Up:
-            newY = Player.pY - 20
-        elif KeyStroke == myCommand.Down:
-            newY = Player.pY + 20
+        if Player.CanMove == True:
+            if KeyStroke == myCommand.Left:
+                newX = Player.pX - 20
+            elif KeyStroke == myCommand.Right:
+                newX = Player.pX + 20
+            elif KeyStroke == myCommand.Up:
+                newY = Player.pY - 20
+            elif KeyStroke == myCommand.Down:
+                newY = Player.pY + 20
 
-    Player.updatePosition(newX, newY)
+        Player.updatePosition(newX, newY)
 
 
 if __name__ == '__main__':
