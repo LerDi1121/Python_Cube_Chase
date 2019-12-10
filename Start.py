@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QFrame, QDesktopWidget, QApplication, QWidget, QHBoxLayout, QLabel
+from PyQt5.QtWidgets import QMainWindow, QFrame, QDesktopWidget, QApplication, QWidget, QHBoxLayout, QLabel, QFileDialog
 from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal
 from PyQt5.QtGui import *
 from Player  import *
@@ -33,17 +33,19 @@ class LavirintP(QMainWindow):
         self.setWindowTitle("Cub Chase")
         self.center()
         hbox = QHBoxLayout(self)
-        pixmap = QPixmap('images\pozadinaProba.png')
+
+        pixmap = QPixmap('images\imgBackground.png')
         lbl = QLabel(self)
         lbl.setPixmap(pixmap)
-        QLabel.setGeometry(lbl, 0, -6, 800, 600)
+        QLabel.setGeometry(lbl, 0, 0, 800, 600)
         hbox.addWidget(lbl)
         self.resize(pixmap.width(), pixmap.height())
         self.setLayout(hbox)
 
     def createPlayerAndEnemy(self):
+
         self.PlayerDist[0] = Player(self, 100, 100, 'images\Simba.png', 0)
-        self.PlayerDist[1] = Player(self, 100, 200, 'images\imgNela.png', 1)
+        self.PlayerDist[1] = Player(self, 100, 200, 'images\imgNela2.png', 1)
         self.EnemyTimon = Timon(self, 200, 100, 'images\imgTimon.png')
         self.EnemyPumba = Pumba(self, 200, 200, 'images\pumba.png')
 
