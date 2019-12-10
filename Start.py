@@ -28,7 +28,7 @@ class LavirintP(QMainWindow):
         self.show()
 
     def InitStart(self):
-        self.resize(800, 600)
+        self.resize(820, 620)
         self.center()
         self.setWindowTitle("Cub Chase")
         self.center()
@@ -37,17 +37,17 @@ class LavirintP(QMainWindow):
         pixmap = QPixmap('images\imgBackground.png')
         lbl = QLabel(self)
         lbl.setPixmap(pixmap)
-        QLabel.setGeometry(lbl, 0, 0, 800, 600)
+        QLabel.setGeometry(lbl, 0, 0, 820, 620)
         hbox.addWidget(lbl)
         self.resize(pixmap.width(), pixmap.height())
         self.setLayout(hbox)
 
     def createPlayerAndEnemy(self):
 
-        self.PlayerDist[0] = Player(self, 100, 100, 'images\Simba.png', 0)
-        self.PlayerDist[1] = Player(self, 100, 200, 'images\imgNela2.png', 1)
-        self.EnemyTimon = Timon(self, 200, 100, 'images\imgTimon.png')
-        self.EnemyPumba = Pumba(self, 200, 200, 'images\pumba.png')
+        self.PlayerDist[0] = Player(self, 110, 110, 'images\Simba.png', 0)
+        self.PlayerDist[1] = Player(self, 110, 210, 'images\imgNela2.png', 1)
+        self.EnemyTimon = Timon(self, 210, 100, 'images\imgTimon.png')
+        self.EnemyPumba = Pumba(self, 210, 200, 'images\pumba.png')
 
     def center(self):
         screen = QDesktopWidget().screenGeometry()
@@ -78,13 +78,17 @@ class LavirintP(QMainWindow):
 
         if Player.CanMove == True:
             if KeyStroke == myCommand.Left:
-                newX = Player.pX - 20
+                if Player.pX> 10:
+                     newX = Player.pX - 20
             elif KeyStroke == myCommand.Right:
-                newX = Player.pX + 20
+                if Player.pX <770:
+                     newX = Player.pX + 20
             elif KeyStroke == myCommand.Up:
-                newY = Player.pY - 20
+                if Player.pY >10:
+                     newY = Player.pY - 20
             elif KeyStroke == myCommand.Down:
-                newY = Player.pY + 20
+                if Player.pY < 570:
+                     newY = Player.pY + 20
 
         Player.updatePosition(newX, newY)
 
