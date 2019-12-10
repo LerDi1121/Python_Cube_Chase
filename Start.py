@@ -34,7 +34,7 @@ class LavirintP(QMainWindow):
         self.center()
         hbox = QHBoxLayout(self)
 
-        pixmap = QPixmap('images\imgBackground.png')
+        pixmap = QPixmap('images\imgBackground2.png')
         lbl = QLabel(self)
         lbl.setPixmap(pixmap)
         QLabel.setGeometry(lbl, 0, 0, 820, 620)
