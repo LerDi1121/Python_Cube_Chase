@@ -47,7 +47,7 @@ class LavirintP(QMainWindow):
 
     def createPlayerAndEnemy(self):
 
-        self.PlayerDist[0] = Player(self, 780, 570, 'images\Simba.png', 0)
+        self.PlayerDist[0] = Player(self, 770, 570, 'images\Simba.png', 0)
         self.PlayerDist[1] = Player(self, 10, 570, 'images\imgNala.png', 1)
         self.EnemyTimon = Timon(self, 210, 100, 'images\imgTimon.png')
         self.EnemyPumba = Pumba(self, 210, 200, 'images\pumba.png')
@@ -63,9 +63,13 @@ class LavirintP(QMainWindow):
             for y in range(len(Map.Level[x])):
                 character = Map.Level[x][y]
                 if character =="X":
-                    coordX= x*40+10
-                    coordY= y*40+10
+                    coordX = x * 40 + 10
+                    coordY = y * 40 + 10
                     self.Walls.append((coordY, coordX))
+                if character=="G":
+                    coordX = x * 40 + 10
+                    coordY = y * 40 + 10
+                    self.Grass.append((coordY, coordX))
         print(self.Walls)
 
 
