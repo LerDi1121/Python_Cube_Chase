@@ -9,6 +9,7 @@ from Command import *
 import time
 import sys
 import keyboard
+from Map import *
 
 import multiprocessing as mp
 
@@ -17,7 +18,8 @@ from PyQt5.uic.properties import QtGui
 
 class LavirintP(QMainWindow):
     def __init__(self):
-
+        self.Walls=[]
+        self.Grass=[]
         super(LavirintP, self).__init__()
         self.InitStart()
         self.PlayerDist = {}
@@ -41,6 +43,7 @@ class LavirintP(QMainWindow):
         hbox.addWidget(lbl)
         self.resize(pixmap.width(), pixmap.height())
         self.setLayout(hbox)
+        self.wall()
 
     def createPlayerAndEnemy(self):
 
@@ -53,6 +56,18 @@ class LavirintP(QMainWindow):
         screen = QDesktopWidget().screenGeometry()
         size = self.geometry()
         self.move((screen.width() - size.width()) / 2, (screen.height() - size.height()) / 2)
+
+
+    def wall(self):
+        for x in range (len( Map.Level)):
+            for y in range(len(Map.Level[x])):
+                character = Map.Level[x][y]
+                if character =="X":
+                    coordX= x*40+10
+                    coordY= y*40+10
+                    self.Walls.append((coordY, coordX))
+        print(self.Walls)
+
 
 
     def keyEvent(self):
@@ -79,18 +94,26 @@ class LavirintP(QMainWindow):
         if Player.CanMove == True:
             if KeyStroke == myCommand.Left:
                 if Player.pX> 10:
-                     newX = Player.pX - 20
+                     newX = Player.pX - 40
+                     if(newX,newY) not in self.Walls:
+                         Player.updatePosition(newX, newY)
             elif KeyStroke == myCommand.Right:
                 if Player.pX <770:
-                     newX = Player.pX + 20
+                     newX = Player.pX + 40
+                     if (newX, newY) not in self.Walls:
+                        Player.updatePosition(newX, newY)
             elif KeyStroke == myCommand.Up:
                 if Player.pY >10:
-                     newY = Player.pY - 20
+                     newY = Player.pY - 40
+                     if (newX, newY) not in self.Walls:
+                         Player.updatePosition(newX, newY)
             elif KeyStroke == myCommand.Down:
                 if Player.pY < 570:
-                     newY = Player.pY + 20
+                     newY = Player.pY + 40
+                     if (newX, newY) not in self.Walls:
+                         Player.updatePosition(newX, newY)
 
-        Player.updatePosition(newX, newY)
+
 
 
 if __name__ == '__main__':
