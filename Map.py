@@ -4,11 +4,11 @@ class Map(object):
         " XXXX      X        ",
         " X      XX X XXXXX  ",
         " X               XG ",
-        "   X X X  XXX XXX   ",
+        "   X X X  XX XXX    ",
         "XX X XXX  X    X  XX",
         " X X X X  X   XX GXG",
         "          XXXXX   XX",
-        "    GX              "
+        "    GX              ",
         "  X GXXX  X XXX  X G",
         "  X       X X X  X G",
         "G X  XXX  X   X  X G",

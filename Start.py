@@ -47,8 +47,8 @@ class LavirintP(QMainWindow):
 
     def createPlayerAndEnemy(self):
 
-        self.PlayerDist[0] = Player(self, 10, 10, 'images\Simba.png', 0)
-        self.PlayerDist[1] = Player(self, 110, 210, 'images\imgNala.png', 1)
+        self.PlayerDist[0] = Player(self, 780, 570, 'images\Simba.png', 0)
+        self.PlayerDist[1] = Player(self, 10, 570, 'images\imgNala.png', 1)
         self.EnemyTimon = Timon(self, 210, 100, 'images\imgTimon.png')
         self.EnemyPumba = Pumba(self, 210, 200, 'images\pumba.png')
 
