@@ -34,7 +34,10 @@ class Timon(QFrame):
         def updatePosition(self, x, y):
             self.pX = x
             self.pY = y
+            PixmapTimon = QPixmap(self.Picture)
+            PixmapResizedTimon = PixmapTimon.scaled(self.PlayerWidth, self.PlayerHeight)
 
+            self.LabelTimon.setPixmap(PixmapResizedTimon)
             self.LabelTimon.move(x, y)
 
 
