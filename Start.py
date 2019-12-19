@@ -27,6 +27,8 @@ class LavirintP(QMainWindow):
         self.EnemyTimon = None
         self.createPlayerAndEnemy()
         Thread(target=self.keyEvent).start()    #KeyPressThread
+        Thread(target=self.keyEvent2).start()    #KeyPressThread
+
         self.show()
 
     def InitStart(self):
@@ -73,6 +75,21 @@ class LavirintP(QMainWindow):
         print(self.Walls)
 
 
+    def keyEvent2(self):
+        while True:
+            try:
+                if keyboard.is_pressed('a'):
+                    self.tryMove(self.PlayerDist[1], myCommand.Left)
+                elif keyboard.is_pressed('d'):
+                    self.tryMove(self.PlayerDist[1], myCommand.Right)
+                elif keyboard.is_pressed('w'):
+                    self.tryMove(self.PlayerDist[1], myCommand.Up)
+                elif keyboard.is_pressed('s'):
+                    self.tryMove(self.PlayerDist[1], myCommand.Down)
+            except:
+                print('Neko drugo dugme...')
+            time.sleep(0.1)
+
 
     def keyEvent(self):
         while True:
@@ -85,16 +102,6 @@ class LavirintP(QMainWindow):
                     self.tryMove(self.PlayerDist[0], myCommand.Up)
                 elif keyboard.is_pressed('down'):
                     self.tryMove(self.PlayerDist[0], myCommand.Down)
-                elif keyboard.is_pressed('a'):
-                    self.tryMove(self.PlayerDist[1], myCommand.Left)
-                elif keyboard.is_pressed('d'):
-                    self.tryMove(self.PlayerDist[1], myCommand.Right)
-                elif keyboard.is_pressed('w'):
-                    self.tryMove(self.PlayerDist[1], myCommand.Up)
-                elif keyboard.is_pressed('s'):
-                    self.tryMove(self.PlayerDist[1], myCommand.Down)
-                elif keyboard.is_pressed('escape'):
-                    self.close()
                 elif keyboard.is_pressed('escape'):
                     self.close()
             except:
