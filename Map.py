@@ -8,7 +8,7 @@ class Map(object):
         "XX X XXX  X    X  XX",
         " X X X X  X   XX GXG",
         "          XXXXX   XX",
-        "    GX              "
+        "    GX              ",
         "  X GXXX  X XXX  X G",
         "  X       X X X  X G",
         "G X  XXX  X   X  X G",

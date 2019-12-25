@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c84fec06-199d-4381-8e19-dd1d0633acd4" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,22 +24,16 @@
   </component>
   <component name="ProjectId" id="1UPuhmhOLV3WjWfu0TrI1XfrgPZ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Start.py" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/venv" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager" selected="Python.bane">
     <configuration name="Unnamed" type="PythonConfigurationType" factoryName="Python">
@@ -71,7 +64,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="D:\4Godina\Python_Cube_Chase\venv\Scripts\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\Andrej\Desktop\pythongit\Python_Cube_Chase\venv\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -108,9 +101,21 @@
     </configuration>
     <list>
       <item itemvalue="Python.Unnamed" />
-      <item itemvalue="Python.projekat" />
       <item itemvalue="Python.bane" />
+      <item itemvalue="Python.projekat" />
     </list>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -147,6 +152,40 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="339" y="154" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576014175957">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="339" y="154" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1576014175957" />
+    <state x="710" y="266" key="FileChooserDialogImpl" timestamp="1576013481803">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="710" y="266" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1576013481803" />
+    <state width="1362" height="266" key="GridCell.Tab.0.bottom" timestamp="1577284605869">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="266" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1577284605869" />
+    <state width="1362" height="266" key="GridCell.Tab.0.center" timestamp="1577284605869">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="266" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1577284605869" />
+    <state width="1362" height="266" key="GridCell.Tab.0.left" timestamp="1577284605869">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="266" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1577284605869" />
+    <state width="1362" height="266" key="GridCell.Tab.0.right" timestamp="1577284605869">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="266" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1577284605869" />
+    <state x="432" y="154" key="SettingsEditor" timestamp="1576013886255">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="432" y="154" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1576013886255" />
+    <state x="661" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1576012926082">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="661" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1576012926082" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
