@@ -8,7 +8,7 @@ class Pumba(QFrame):
         PumbaHeight = 40
         pX = 0
         pY = 0
-
+        CanMove= True
         LabelPumba = 0
         Picture = ""
 
@@ -26,7 +26,7 @@ class Pumba(QFrame):
             self.LabelPumba = QLabel(parent)
 
             PixmapPumba = QPixmap(picture)
-            PixmapResizedPumba = PixmapPumba.scaled(self.PumbaWidth,self.PumbaHeight)
+            PixmapResizedPumba = PixmapPumba.scaled(self.PumbaWidth, self.PumbaHeight)
 
             self.LabelPumba.setPixmap(PixmapResizedPumba)
             self.LabelPumba.move(x, y)
@@ -35,6 +35,11 @@ class Pumba(QFrame):
             self.pX = x
             self.pY = y
 
+
+            PixmapPumba = QPixmap(self.Picture)
+            PixmapResizedPumba = PixmapPumba.scaled(self.PumbaWidth, self.PumbaHeight)
+
+            self.LabelPumba.setPixmap(PixmapResizedPumba)
             self.LabelPumba.move(x, y)
 
 

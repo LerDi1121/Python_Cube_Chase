@@ -4,7 +4,7 @@ class Map(object):
         " XXXX      X        ",
         " X      XX X XXXXX  ",
         " X               XG ",
-        "   X X X   XX XXX   ",
+        "   X X X  XX XXX    ",
         "XX X XXX  X    X  XX",
         " X X X X  X   XX GXG",
         "          XXXXX   XX",
