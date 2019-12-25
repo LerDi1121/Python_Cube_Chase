@@ -8,7 +8,7 @@ class Timon(QFrame):
         TimonHeight = 40
         pX = 10
         pY = 20
-
+        CanMove = True;
         LabelTimon = 0
         Picture = ""
 
@@ -35,7 +35,7 @@ class Timon(QFrame):
             self.pX = x
             self.pY = y
             PixmapTimon = QPixmap(self.Picture)
-            PixmapResizedTimon = PixmapTimon.scaled(self.PlayerWidth, self.PlayerHeight)
+            PixmapResizedTimon = PixmapTimon.scaled(self.TimonWidth, self.TimonHeight)
 
             self.LabelTimon.setPixmap(PixmapResizedTimon)
             self.LabelTimon.move(x, y)

@@ -6,6 +6,7 @@ from PyQt5.QtGui import *
 class Player(QFrame):
         PlayerWidth = 40
         PlayerHeight = 40
+        PictureFoot = ""
         pX = 0
         pY = 0
 
@@ -15,16 +16,17 @@ class Player(QFrame):
         CanMove = True
         IsAlive = True
 
-        def __init__(self, parent, x, y, picture, id):
+        def __init__(self, parent, x, y, picture, footPicture, id):
             super().__init__(parent)
 
-            self.initPlayer(parent, x, y, picture, id)
+            self.initPlayer(parent, x, y, picture, footPicture, id)
 
-        def initPlayer(self, parent, x, y, picture, id):
+        def initPlayer(self, parent, x, y, picture, footPicture, id):
             self.resize(800, 600)
             self.pX = x
             self.pY = y
             self.Picture = picture
+            self.PictureFoot = footPicture
 
             self.LabelPlayer = QLabel(parent)
 
