@@ -34,6 +34,7 @@ class LavirintP(QMainWindow):
         Thread(target=self.keyEvent2).start()    #KeyPressThread
         Thread(target=self.enemyMove).start()  # KeyPressThread"""
         Thread(target=self.enemyMove2).start()  # KeyPressThread"""
+        Thread(target=self.playerDead).start()  # KeyPressThread"""
         self.show()
 
     def InitStart(self):
@@ -284,7 +285,7 @@ class LavirintP(QMainWindow):
                              self.UseSpace.append(Label)
                              self.Space.remove((newX,newY))
             elif KeyStroke == myCommand.Right:
-                if Player.pX <770:
+                if Player.pX < 770:
                      newX = Player.pX + 40
                      if (newX, newY) not in self.Walls:
                         Player.updatePosition(newX, newY)
@@ -333,6 +334,19 @@ class LavirintP(QMainWindow):
                              self.UseSpace.append(Label)                ##???
                              self.Space.remove((newX, newY))
 
+
+    def playerDead(self):
+        while True:
+            if self.EnemyPumba.pX == self.PlayerDist[1].pX and self.EnemyPumba.pY == self.PlayerDist[1].pY:
+                self.PlayerDist[1].updatePosition(10, 570)
+
+            if self.EnemyPumba.pX == self.PlayerDist[0].pX and self.EnemyPumba.pY == self.PlayerDist[0].pY:
+                self.PlayerDist[0].updatePosition(770, 570)
+            if self.EnemyTimon.pX == self.PlayerDist[1].pX and self.EnemyTimon.pY == self.PlayerDist[1].pY:
+                self.PlayerDist[1].updatePosition(10, 570)
+            if self.EnemyTimon.pX == self.PlayerDist[0].pX and self.EnemyTimon.pY == self.PlayerDist[0].pY:
+                self.PlayerDist[0].updatePosition(10, 570)
+            time.sleep(0.1)
 
 
 
