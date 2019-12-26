@@ -1,6 +1,6 @@
 from random import randint
 
-from PyQt5.QtWidgets import QMainWindow, QFrame, QDesktopWidget, QApplication, QWidget, QHBoxLayout, QLabel, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QGridLayout, QFrame, QDesktopWidget, QApplication, QWidget, QHBoxLayout, QLabel, QFileDialog
 from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal
 from PyQt5.QtGui import *
 from Player  import *
@@ -12,6 +12,7 @@ import time
 import sys
 import keyboard
 from Map import *
+import uuid
 
 import multiprocessing as mp
 
@@ -20,6 +21,7 @@ from PyQt5.uic.properties import QtGui
 
 class LavirintP(QMainWindow):
     def __init__(self):
+
         self.Walls=[]
         self.Grass=[]
         self.Space=[]
@@ -29,8 +31,9 @@ class LavirintP(QMainWindow):
         self.PlayerDict = {}
         self.EnemyPumba = None
         self.EnemyTimon = None
-        self.FootLabel = QLabel()
         self.createPlayerAndEnemy()
+        self.createLabels()
+
         T1 =Thread(target=self.keyEvent)
         T1.daemon = True
         T1.start()
@@ -70,17 +73,14 @@ class LavirintP(QMainWindow):
         self.setLayout(hbox)
         self.wall()
 
+
+
     def createPlayerAndEnemy(self):
 
-        self.PlayerDict[0] = Player(self, 770, 570, 'images\Simba.png', 'images\Simba.png', 0)
-        self.PlayerDict[1] = Player(self, 10, 570, 'images\imgNala.png', 'images\foot2_small.png',  1)
+        self.PlayerDict[0] = Player(self, 770, 570, 'images\Simba.png', 'images\imgfoot1_small.png', 0)
+        self.PlayerDict[1] = Player(self, 10, 570, 'images\imgNala.png', 'images\imgfoot2_small.png',  1)
         self.EnemyTimon = Timon(self, 10, 10, 'images\imgTimon.png')
         self.EnemyPumba = Pumba(self, 770, 10, 'images\pumba.png')
-
-        PixmapFoot = QPixmap('images\Simba.png' )
-        PixmapResizedFoot = PixmapFoot.scaled(40, 40)
-        self.FootLabel.setPixmap( PixmapResizedFoot )
-        self.FootLabel.move(60, 60)
 
     def center(self):
         screen = QDesktopWidget().screenGeometry()
@@ -296,15 +296,10 @@ class LavirintP(QMainWindow):
                      if(newX,newY) not in self.Walls:
                          Player.updatePosition(newX, newY)
                          if (newX, newY) in self.Space:
-
                              PixmapFoot = QPixmap(Player.PictureFoot)
                              PixmapResizedFoot = PixmapFoot.scaled(40,40)
-                             print( newY )
-                             print( newX)
-                             print("")
                              self.FootLabel.setPixmap(PixmapResizedFoot)
                              self.FootLabel.move(newX, newY)
-                            # self.UseSpace.append(Label)
                              self.Space.remove((newX,newY))
             elif KeyStroke == myCommand.Right:
                 if Player.pX < 770:
@@ -312,16 +307,10 @@ class LavirintP(QMainWindow):
                      if (newX, newY) not in self.Walls:
                         Player.updatePosition(newX, newY)
                         if (newX, newY) in self.Space:
-                            Label = QLabel()
-                            print(newY)
-                            print(newX)
-                            print("")
                             PixmapFoot = QPixmap(Player.PictureFoot)
                             PixmapResizedFoot = PixmapFoot.scaled(40, 40)
-
-                            Label.setPixmap(PixmapResizedFoot)
-                            Label.move(newX, newY)
-                            self.UseSpace.append(Label)
+                            self.FootLabel.setPixmap(PixmapResizedFoot)
+                            self.FootLabel.move(newX, newY)
                             self.Space.remove((newX, newY))
             elif KeyStroke == myCommand.Up:
                 if Player.pY >10:
@@ -329,15 +318,10 @@ class LavirintP(QMainWindow):
                      if (newX, newY) not in self.Walls:
                          Player.updatePosition(newX, newY)
                          if (newX, newY) in self.Space:
-                             Label = QLabel()
-                             print(newY)
-                             print(newX)
-                             print("")
                              PixmapFoot = QPixmap(Player.PictureFoot)
                              PixmapResizedFoot = PixmapFoot.scaled(40, 40)
-                             Label.setPixmap(PixmapResizedFoot)
-                             Label.move(newX, newY)
-                             self.UseSpace.append(Label)
+                             self.FootLabel.setPixmap(PixmapResizedFoot)
+                             self.FootLabel.move(newX, newY)
                              self.Space.remove((newX, newY))
             elif KeyStroke == myCommand.Down:
                 if Player.pY < 570:
@@ -345,15 +329,10 @@ class LavirintP(QMainWindow):
                      if (newX, newY) not in self.Walls:
                          Player.updatePosition(newX, newY)
                          if (newX, newY) in self.Space:
-                             Label = QLabel(self)
-                             print(newY)
-                             print(newX)
-                             print("")
                              PixmapFoot = QPixmap(Player.PictureFoot)
                              PixmapResizedFoot = PixmapFoot.scaled(40, 40)
-                             Label.setPixmap(PixmapResizedFoot)
-                             Label.move(newX, newY)
-                             self.UseSpace.append(Label)                ##???
+                             self.FootLabel.setPixmap(PixmapResizedFoot)
+                             self.FootLabel.move(newX, newY)
                              self.Space.remove((newX, newY))
 
 
@@ -369,6 +348,11 @@ class LavirintP(QMainWindow):
             if self.EnemyTimon.pX == self.PlayerDict[0].pX and self.EnemyTimon.pY == self.PlayerDict[0].pY:
                 self.PlayerDict[0].updatePosition(770, 570)
             time.sleep(0.1)
+
+    def createLabels(self):
+
+        self.FootLabel = QLabel(self)
+        self.FootLabel2 = QLabel(self)
 
 
 
