@@ -11,6 +11,7 @@ class Pumba(QFrame):
         CanMove= True
         LabelPumba = 0
         Picture = ""
+        Speed = 0.3
 
         def __init__(self, parent, x, y, picture):
             super().__init__(parent)
