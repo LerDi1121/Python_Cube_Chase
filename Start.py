@@ -26,15 +26,32 @@ class LavirintP(QMainWindow):
         self.UseSpace=[]
         super(LavirintP, self).__init__()
         self.InitStart()
-        self.PlayerDist = {}
+        self.PlayerDict = {}
         self.EnemyPumba = None
         self.EnemyTimon = None
+        self.FootLabel = QLabel()
         self.createPlayerAndEnemy()
-        Thread(target=self.keyEvent).start()    #KeyPressThread
-        Thread(target=self.keyEvent2).start()    #KeyPressThread
-        Thread(target=self.enemyMove).start()  # KeyPressThread"""
-        Thread(target=self.enemyMove2).start()  # KeyPressThread"""
-        Thread(target=self.playerDead).start()  # KeyPressThread"""
+        T1 =Thread(target=self.keyEvent)
+        T1.daemon = True
+        T1.start()
+        #KeyPressThread
+        T2=Thread(target=self.keyEvent2)
+        T2.daemon = True
+        T2.start()
+        #KeyPressThread
+        T3=Thread(target=self.enemyMove)
+        T3.daemon = True
+        T3.start()
+        # KeyPressThread"""
+        T4=Thread(target=self.enemyMove2)
+
+        T4.daemon = True
+        T4.start()
+        # KeyPressThread"""
+        T5 = Thread(target=self.playerDead)
+        T5.daemon = True
+        T5.start()
+        # KeyPressThread"""
         self.show()
 
     def InitStart(self):
@@ -55,10 +72,15 @@ class LavirintP(QMainWindow):
 
     def createPlayerAndEnemy(self):
 
-        self.PlayerDist[0] = Player(self, 770, 570, 'images\Simba.png', 'images\Simba.png', 0)
-        self.PlayerDist[1] = Player(self, 10, 570, 'images\imgNala.png', 'images\foot2_small.png',  1)
+        self.PlayerDict[0] = Player(self, 770, 570, 'images\Simba.png', 'images\Simba.png', 0)
+        self.PlayerDict[1] = Player(self, 10, 570, 'images\imgNala.png', 'images\foot2_small.png',  1)
         self.EnemyTimon = Timon(self, 10, 10, 'images\imgTimon.png')
         self.EnemyPumba = Pumba(self, 770, 10, 'images\pumba.png')
+
+        PixmapFoot = QPixmap('images\Simba.png' )
+        PixmapResizedFoot = PixmapFoot.scaled(40, 40)
+        self.FootLabel.setPixmap( PixmapResizedFoot )
+        self.FootLabel.move(60, 60)
 
     def center(self):
         screen = QDesktopWidget().screenGeometry()
@@ -188,19 +210,19 @@ class LavirintP(QMainWindow):
                 if value == 0:
                     for x in range(value2):
                         if self.tryMoveTimon(self.EnemyTimon, myCommand.Right):
-                            time.sleep(0.1)
+                            time.sleep(self.EnemyTimon.Speed)
                 if value == 1:
                     for x in range(value2):
                         if self.tryMoveTimon(self.EnemyTimon, myCommand.Left):
-                            time.sleep(0.1)
+                            time.sleep(self.EnemyTimon.Speed)
                 if value == 2:
                     for x in range(value2):
                         if self.tryMoveTimon(self.EnemyTimon, myCommand.Up):
-                            time.sleep(0.1)
+                            time.sleep(self.EnemyTimon.Speed)
                 if value == 3:
                     for x in range(value2):
                         if self.tryMoveTimon(self.EnemyTimon, myCommand.Down):
-                            time.sleep(0.1)
+                            time.sleep(self.EnemyTimon.Speed)
             except:
                 print("")
 
@@ -212,19 +234,19 @@ class LavirintP(QMainWindow):
                 if value == 0:
                     for x in range(value2):
                         if self.tryMoveTimon(self.EnemyPumba, myCommand.Right):
-                            time.sleep(0.1)
+                            time.sleep(self.EnemyPumba.Speed)
                 if value == 1:
                     for x in range(value2):
                         if self.tryMoveTimon(self.EnemyPumba, myCommand.Left):
-                            time.sleep(0.1)
+                            time.sleep(self.EnemyPumba.Speed)
                 if value == 2:
                     for x in range(value2):
                         if self.tryMoveTimon(self.EnemyPumba, myCommand.Up):
-                            time.sleep(0.1)
+                            time.sleep(self.EnemyPumba.Speed)
                 if value == 3:
                     for x in range(value2):
                         if self.tryMoveTimon(self.EnemyPumba, myCommand.Down):
-                            time.sleep(0.1)
+                            time.sleep(self.EnemyPumba.Speed)
             except:
                 print("")
 
@@ -233,13 +255,13 @@ class LavirintP(QMainWindow):
         while True:
             try:
                 if keyboard.is_pressed('a'):
-                    self.tryMove(self.PlayerDist[1], myCommand.Left)
+                    self.tryMove(self.PlayerDict[1], myCommand.Left)
                 elif keyboard.is_pressed('d'):
-                    self.tryMove(self.PlayerDist[1], myCommand.Right)
+                    self.tryMove(self.PlayerDict[1], myCommand.Right)
                 elif keyboard.is_pressed('w'):
-                    self.tryMove(self.PlayerDist[1], myCommand.Up)
+                    self.tryMove(self.PlayerDict[1], myCommand.Up)
                 elif keyboard.is_pressed('s'):
-                    self.tryMove(self.PlayerDist[1], myCommand.Down)
+                    self.tryMove(self.PlayerDict[1], myCommand.Down)
             except:
                 print('')
             time.sleep(0.1)
@@ -249,13 +271,13 @@ class LavirintP(QMainWindow):
         while True:
             try:
                 if keyboard.is_pressed('left'):
-                    self.tryMove(self.PlayerDist[0], myCommand.Left)
+                    self.tryMove(self.PlayerDict[0], myCommand.Left)
                 elif keyboard.is_pressed('right'):
-                    self.tryMove(self.PlayerDist[0], myCommand.Right)
+                    self.tryMove(self.PlayerDict[0], myCommand.Right)
                 elif keyboard.is_pressed('up'):
-                    self.tryMove(self.PlayerDist[0], myCommand.Up)
+                    self.tryMove(self.PlayerDict[0], myCommand.Up)
                 elif keyboard.is_pressed('down'):
-                    self.tryMove(self.PlayerDist[0], myCommand.Down)
+                    self.tryMove(self.PlayerDict[0], myCommand.Down)
                 elif keyboard.is_pressed('escape'):
                     self.close()
             except:
@@ -274,15 +296,15 @@ class LavirintP(QMainWindow):
                      if(newX,newY) not in self.Walls:
                          Player.updatePosition(newX, newY)
                          if (newX, newY) in self.Space:
-                             Label = QLabel()
+
                              PixmapFoot = QPixmap(Player.PictureFoot)
                              PixmapResizedFoot = PixmapFoot.scaled(40,40)
                              print( newY )
                              print( newX)
                              print("")
-                             Label.setPixmap(PixmapResizedFoot)
-                             Label.move(newX, newY)
-                             self.UseSpace.append(Label)
+                             self.FootLabel.setPixmap(PixmapResizedFoot)
+                             self.FootLabel.move(newX, newY)
+                            # self.UseSpace.append(Label)
                              self.Space.remove((newX,newY))
             elif KeyStroke == myCommand.Right:
                 if Player.pX < 770:
@@ -337,15 +359,15 @@ class LavirintP(QMainWindow):
 
     def playerDead(self):
         while True:
-            if self.EnemyPumba.pX == self.PlayerDist[1].pX and self.EnemyPumba.pY == self.PlayerDist[1].pY:
-                self.PlayerDist[1].updatePosition(10, 570)
+            if self.EnemyPumba.pX == self.PlayerDict[1].pX and self.EnemyPumba.pY == self.PlayerDict[1].pY:
+                self.PlayerDict[1].updatePosition(10, 570)
 
-            if self.EnemyPumba.pX == self.PlayerDist[0].pX and self.EnemyPumba.pY == self.PlayerDist[0].pY:
-                self.PlayerDist[0].updatePosition(770, 570)
-            if self.EnemyTimon.pX == self.PlayerDist[1].pX and self.EnemyTimon.pY == self.PlayerDist[1].pY:
-                self.PlayerDist[1].updatePosition(10, 570)
-            if self.EnemyTimon.pX == self.PlayerDist[0].pX and self.EnemyTimon.pY == self.PlayerDist[0].pY:
-                self.PlayerDist[0].updatePosition(10, 570)
+            if self.EnemyPumba.pX == self.PlayerDict[0].pX and self.EnemyPumba.pY == self.PlayerDict[0].pY:
+                self.PlayerDict[0].updatePosition(770, 570)
+            if self.EnemyTimon.pX == self.PlayerDict[1].pX and self.EnemyTimon.pY == self.PlayerDict[1].pY:
+                self.PlayerDict[1].updatePosition(10, 570)
+            if self.EnemyTimon.pX == self.PlayerDict[0].pX and self.EnemyTimon.pY == self.PlayerDict[0].pY:
+                self.PlayerDict[0].updatePosition(770, 570)
             time.sleep(0.1)
 
 
