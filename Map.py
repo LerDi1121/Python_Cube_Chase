@@ -1,4 +1,4 @@
-class Map(object):
+class Map():
     Level=[
         "       GGG    GG    ",
         " XXXX      X        ",
@@ -16,3 +16,26 @@ class Map(object):
         "G    X             G",
         "GG           GGGGGGG"
     ]
+    Walls = []
+    Grass = []
+    Space = []
+    UseSpace = []
+
+
+    def wall(self):
+        for x in range(len(Map.Level)):
+            for y in range(len(Map.Level[x])):
+                character = Map.Level[x][y]
+                if character == "X":
+                    coordX = x * 40 + 10
+                    coordY = y * 40 + 10
+                    Map.Walls.append((coordY, coordX))
+                if character == "G":
+                    coordX = x * 40 + 10
+                    coordY = y * 40 + 10
+                    Map.Grass.append((coordY, coordX))
+                if character == " ":
+                    coordX = x * 40 + 10
+                    coordY = y * 40 + 10
+                    Map.Space.append((coordY, coordX))
+
