@@ -37,24 +37,23 @@ class LavirintP(QMainWindow):
         T1 =Thread(target=self.keyEvent)
         T1.daemon = True
         T1.start()
-        #KeyPressThread
+
         T2=Thread(target=self.keyEvent2)
         T2.daemon = True
         T2.start()
-        #KeyPressThread
+
         T3=Thread(target=self.enemyMove)
         T3.daemon = True
         T3.start()
-        # KeyPressThread"""
-        T4=Thread(target=self.enemyMove2)
 
+        T4=Thread(target=self.enemyMove2)
         T4.daemon = True
         T4.start()
-        # KeyPressThread"""
+
         T5 = Thread(target=self.playerDead)
         T5.daemon = True
         T5.start()
-        # KeyPressThread"""
+
         self.show()
 
     def InitStart(self):
@@ -72,7 +71,6 @@ class LavirintP(QMainWindow):
         self.resize(pixmap.width(), pixmap.height())
         self.setLayout(hbox)
         self.wall()
-
 
 
     def createPlayerAndEnemy(self):
@@ -288,7 +286,8 @@ class LavirintP(QMainWindow):
     def tryMove(self, Player, KeyStroke):
         newX = Player.pX
         newY = Player.pY
-
+        PixmapFoot = QPixmap(Player.PictureFoot)
+        PixmapResizedFoot = PixmapFoot.scaled(40, 40)
         if Player.CanMove == True:
             if KeyStroke == myCommand.Left:
                 if Player.pX> 10:
@@ -296,19 +295,15 @@ class LavirintP(QMainWindow):
                      if(newX,newY) not in self.Walls:
                          Player.updatePosition(newX, newY)
                          if (newX, newY) in self.Space:
-                             PixmapFoot = QPixmap(Player.PictureFoot)
-                             PixmapResizedFoot = PixmapFoot.scaled(40,40)
                              self.FootLabel.setPixmap(PixmapResizedFoot)
                              self.FootLabel.move(newX, newY)
-                             self.Space.remove((newX,newY))
+                             self.Space.remove((newX, newY))
             elif KeyStroke == myCommand.Right:
                 if Player.pX < 770:
                      newX = Player.pX + 40
                      if (newX, newY) not in self.Walls:
                         Player.updatePosition(newX, newY)
                         if (newX, newY) in self.Space:
-                            PixmapFoot = QPixmap(Player.PictureFoot)
-                            PixmapResizedFoot = PixmapFoot.scaled(40, 40)
                             self.FootLabel.setPixmap(PixmapResizedFoot)
                             self.FootLabel.move(newX, newY)
                             self.Space.remove((newX, newY))
@@ -318,8 +313,6 @@ class LavirintP(QMainWindow):
                      if (newX, newY) not in self.Walls:
                          Player.updatePosition(newX, newY)
                          if (newX, newY) in self.Space:
-                             PixmapFoot = QPixmap(Player.PictureFoot)
-                             PixmapResizedFoot = PixmapFoot.scaled(40, 40)
                              self.FootLabel.setPixmap(PixmapResizedFoot)
                              self.FootLabel.move(newX, newY)
                              self.Space.remove((newX, newY))
@@ -329,8 +322,6 @@ class LavirintP(QMainWindow):
                      if (newX, newY) not in self.Walls:
                          Player.updatePosition(newX, newY)
                          if (newX, newY) in self.Space:
-                             PixmapFoot = QPixmap(Player.PictureFoot)
-                             PixmapResizedFoot = PixmapFoot.scaled(40, 40)
                              self.FootLabel.setPixmap(PixmapResizedFoot)
                              self.FootLabel.move(newX, newY)
                              self.Space.remove((newX, newY))
@@ -340,7 +331,6 @@ class LavirintP(QMainWindow):
         while True:
             if self.EnemyPumba.pX == self.PlayerDict[1].pX and self.EnemyPumba.pY == self.PlayerDict[1].pY:
                 self.PlayerDict[1].updatePosition(10, 570)
-
             if self.EnemyPumba.pX == self.PlayerDict[0].pX and self.EnemyPumba.pY == self.PlayerDict[0].pY:
                 self.PlayerDict[0].updatePosition(770, 570)
             if self.EnemyTimon.pX == self.PlayerDict[1].pX and self.EnemyTimon.pY == self.PlayerDict[1].pY:
@@ -354,6 +344,9 @@ class LavirintP(QMainWindow):
         self.FootLabel = QLabel(self)
         self.FootLabel2 = QLabel(self)
 
+    def createLabel(self, newx, newy):
+        self.FootLabel = QLabel(self)
+        self.FootLabel2 = QLabel(self)
 
 
 if __name__ == '__main__':
