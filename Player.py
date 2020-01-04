@@ -18,7 +18,7 @@ class Player(QFrame):
         ID = 0
         CanMove = True
         IsAlive = True
-        Dead= pyqtSignal()
+        Dead = pyqtSignal()
         up = pyqtSignal()
         down = pyqtSignal()
         left = pyqtSignal()

@@ -1,5 +1,7 @@
 """vujadin"""
 from random import randint
+import time
+from threading import Thread
 
 from PyQt5.QtWidgets import QMainWindow, QFrame, QDesktopWidget, QApplication, QWidget, QHBoxLayout, QLabel
 from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal
@@ -16,7 +18,7 @@ class Enemy(QFrame):
         CanMove= True
         LabelEnemy = 0
         Picture = ""
-        Speed = 0.3
+        Speed = 300
         ID =0
         Move = pyqtSignal()
 
@@ -32,63 +34,74 @@ class Enemy(QFrame):
             self.Picture = picture
             self.ID=id
             self.LabelEnemy = QLabel(parent)
-
+            self.Move.connect(self.moveEnemy)
             PixmapEnemy = QPixmap(picture)
             PixmapResizedEnemy = PixmapEnemy.scaled(self.EnemyWidth, self.EnemyHeight)
 
             self.LabelEnemy.setPixmap(PixmapResizedEnemy)
+            self.timer = QBasicTimer()
+            self.timer.start(self.Speed, self)
             self.LabelEnemy.move(x, y)
+            #self.t = Thread(target=self.moveEnemy)
+            #self.t.daemon = True
+            #self.t.start()
+
+        # T4.start()
 
         def updatePosition(self, x, y):
             self.pX = x
             self.pY = y
-
-
             PixmapEnemy = QPixmap(self.Picture)
             PixmapResizedEnemy = PixmapEnemy.scaled(self.EnemyWidth, self.EnemyHeight)
-
             self.LabelEnemy.setPixmap(PixmapResizedEnemy)
             self.LabelEnemy.move(x, y)
 
 
-        def moveEnemy(self):
 
+
+        def moveEnemy(self):
             if self.CanMove:
                 newX = self.pX
                 newY = self.pY
                 value = randint(0, 3)
-                value2 = randint(1, 15)
-                if value == 0:
-                    for x in range(value2):
-                        if Enemy.pX > 10:
-                            newX = self.pX - 40
-                            if (newX, newY) not in Map.Walls:
-                                self.updatePosition(newX, newY)
-                                #time.sleep(Enemy.Speed)
-                if value == 1:
-                    for x in range(value2):
-                        if Enemy.pX < 770:
-                            newX = self.pX + 40
-                            if (newX, newY) not in Map.Walls:
-                                Enemy.updatePosition(newX, newY)
-                             # time.sleep(Enemy.Speed)
-                if value == 2:
-                    for x in range(value2):
-                        if Enemy.pY > 10:
-                            newY = Enemy.pY - 40
-                            if (newX, newY) not in Map.Walls:
-                                Enemy.updatePosition(newX, newY)
-                                #time.sleep(Enemy.Speed)
-                if value == 3:
-                    for x in range(value2):
-                        if Enemy.pY < 570:
-                            newY = Enemy.pY + 40
-                            if (newX, newY) not in Map.Walls:
-                                Enemy.updatePosition(newX, newY)
-                                #time.sleep(Enemy.Speed)
 
-        def timerEvent(self, a0: 'QTimerEvent'):
-            self.move.emit()
+                if value == 0:
+                    if newY > 10:
+                        newY = newY - 40
+                        if (newX, newY) not in Map.Map.Walls:
+                            self.LabelEnemy.move(newX, newY)
+                            self.pX = newX
+                            self.pY = newY
+                if value == 1:
+                    if newY < 570:
+                        newY = newY + 40
+                        if (newX, newY) not in Map.Map.Walls:
+                            self.LabelEnemy.move(newX, newY)
+                            self.pX = newX
+                            self.pY = newY
+
+                if value == 2:
+                    if newX > 10:
+                        newX = newX - 40
+                        if (newX, newY) not in Map.Map.Walls:
+                            self.LabelEnemy.move(newX, newY)
+                            self.pX = newX
+                            self.pY = newY
+
+                if value == 3:
+                    if newX < 770:
+                        newX = newX + 40
+                        if (newX, newY) not in Map.Map.Walls:
+                            self.LabelEnemy.move(newX, newY)
+                            self.pX = newX
+                            self.pY = newY
+
+
+
+
+
+        def timerEvent(self, event):
+            self.Move.emit()
 
 
 
