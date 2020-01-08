@@ -22,6 +22,7 @@ from PyQt5.uic.properties import QtGui
 
 
 class LavirintP(QMainWindow):
+
     def __init__(self):
 
 
@@ -31,14 +32,22 @@ class LavirintP(QMainWindow):
         self.EnemyDict=[]
         self.createPlayerAndEnemy()
         self.createLabels()
+        self.lblPly1Score= QLabel(self)
+        self.lblPly2Score = QLabel(self)
+        self.lblPly1Score.setText("Score: 0")
+        self.lblPly1Score.move(715,620)
+        self.lblPly1Score.resize(100,20)
+        self.lblPly1Score.setFrameStyle(3)
+        self.lblPly2Score.setText("Score: 0")
+        self.lblPly2Score.move(5, 620)
+        self.lblPly2Score.resize(100, 20)
+        self.lblPly2Score.setFrameStyle(3)
         Walls = []
         Grass = []
         Space = []
         UseSpace = []
         map = Map()
         map.wall()
-
-
         self.in_queue = Queue()
         self.out_queue = Queue()
         self.playerProcess = CollisionProcess(self.in_queue, self.out_queue)
@@ -46,14 +55,25 @@ class LavirintP(QMainWindow):
         self.playerCollisionWorker = CollisionWorker(self.PlayerDict, self.EnemyDict, self.in_queue,self.out_queue)
         self.playerCollisionWorker.update.connect(self.close_app)
         self.playerCollisionWorker.start()
+        self.timer = QBasicTimer()
+        self.timer.start(30, self)
+        self.thread1 = Thread(target=self.EnemyDict[0].changeCoord)
+        self.thread1.daemon = True
+        self.thread1.start()
+        self.thread2 = Thread(target=self.EnemyDict[1].changeCoord)
+        self.thread2.daemon = True
+        self.thread2.start()
         self.show()
 
-        # KeyPressThread"""
 
 
-
+    def timerEvent(self, event):
+        if self.PlayerDict[0] != None:
+            self.lblPly1Score.setText("Player 1:" + str(self.PlayerDict[0].Score))
+        if self.PlayerDict[1] != None:
+            self.lblPly2Score.setText("Player 2:" + str(self.PlayerDict[1].Score))
     def InitStart(self):
-        self.resize(820, 620)
+        self.resize(820, 640)
         self.center()
         self.setWindowTitle("Cub Chase")
         self.center()
@@ -64,7 +84,7 @@ class LavirintP(QMainWindow):
         lbl.setPixmap(pixmap)
         QLabel.setGeometry(lbl, 0, 0, 820, 620)
         hbox.addWidget(lbl)
-        self.resize(pixmap.width(), pixmap.height())
+        self.resize(pixmap.width(), pixmap.height()+20)
         self.setLayout(hbox)
 
 
@@ -74,21 +94,14 @@ class LavirintP(QMainWindow):
         self.PlayerDict.append( Player(self, 10, 570, 'images\imgNala.png', 'images\imgfoot2_small.png',  1))
         self.EnemyDict.append(Enemy(self, 10, 10, 'images\imgTimon.png',0))
         self.EnemyDict.append(Enemy(self, 770, 10, 'images\pumba.png',1))
-        #self.timer = self.startTimer(self.EnemyDict[0].Speed)
+
+
 
 
     def center(self):
         screen = QDesktopWidget().screenGeometry()
         size = self.geometry()
         self.move((screen.width() - size.width()) / 2, (screen.height() - size.height()) / 2)
-
-    #def timerEvent(self, a0: 'QTimerEvent'):
-      #  self.EnemyDict[1].Move.emit()
-      #  self.EnemyDict[0].Move.emit()
-
-
-
-
 
 
     def close_app(self):
