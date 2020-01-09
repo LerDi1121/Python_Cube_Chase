@@ -74,8 +74,13 @@ class Player(QFrame):
         def deadPlayer(self):
             if(self.Live - 1) >= 0:
                 self.Live = self.Live - 1
+                self.pX= self.startX
+                self.pY= self.startY
                 self.updatePosition(self.startX, self.startY)
                 self.Score = self.Score - 150
+                if self.Live == 0:
+                    self.CanMove = False
+            self.update()
 
 
         def move_up(self):

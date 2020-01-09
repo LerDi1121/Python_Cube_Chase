@@ -42,10 +42,6 @@ class LavirintP(QMainWindow):
         self.lblPly2Score.move(5, 620)
         self.lblPly2Score.resize(100, 20)
         self.lblPly2Score.setFrameStyle(3)
-        Walls = []
-        Grass = []
-        Space = []
-        UseSpace = []
         map = Map()
         map.wall()
         self.in_queue = Queue()

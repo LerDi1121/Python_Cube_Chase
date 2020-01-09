@@ -15,10 +15,13 @@ class CollisionProcess(mp.Process):
         while True:
 
             tp = in_q.get()
-           # enemies = tp[1]
-           # players = tp[0]
-           # for e in range(len(enemies)):
-              # print(e[9])
+            enemies = tp[1]
+            players = tp[0]
+            for e in range(len(enemies)):
+                for p in range(len(players)):
+                    if enemies[e][1] == players[p][1] and enemies[e][0] == players[p][0]:
+                        out_q.put(players[p][2])
+
 
             time.sleep(0.01)
             out_q.put(-1)

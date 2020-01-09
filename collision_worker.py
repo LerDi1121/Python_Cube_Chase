@@ -15,13 +15,16 @@ class CollisionWorker(Worker):
 
     def work(self):
         while True:
-           # enem = list(map(lambda x: [x.pX(), x.pY()], self.enemies))
-            ply = map(lambda x: [x.pX(), x.pY(), x.ID()], self.players)
+            enem = list(map(lambda x: [x.pX, x.pY], self.enemies))
+            ply = list(map(lambda x: [x.pX, x.pY, x.ID], self.players))
 
-           #self.i_p.put([ply, enem])
+            self.i_p.put([ply, enem])
             val = self.o_p.get()
 
             if val != -1:
-                #val.Dead.emit()
-                self.update.emit()
+                for p in range(len(self.players)):
+                    if(self.players[p].ID == val):
+                        self.players[p].Dead.emit()
+                        time.sleep(0.01)
+
             time.sleep(0.01)
