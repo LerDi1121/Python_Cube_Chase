@@ -4,6 +4,7 @@ from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal
 from PyQt5.QtGui import *
 from Map import *
 
+
 class Player(QFrame):
         PlayerWidth = 40
         PlayerHeight = 40
@@ -18,11 +19,14 @@ class Player(QFrame):
         ID = 0
         CanMove = True
         IsAlive = True
-        Dead= pyqtSignal()
+        Dead = pyqtSignal()
         up = pyqtSignal()
         down = pyqtSignal()
         left = pyqtSignal()
         right = pyqtSignal()
+        FootLab=0
+        Score=0
+       # parent=0
 
         def __init__(self, parent, x, y, picture, footPicture, id):
             super().__init__(parent)
@@ -44,11 +48,20 @@ class Player(QFrame):
             self.left.connect(self.move_left)
             self.right.connect(self.move_right)
             self.Dead.connect(self.deadPlayer)
+            self.Score=0
             self.LabelPlayer = QLabel(parent)
             PixmapPlayer = QPixmap(picture)
             PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
             self.LabelPlayer.setPixmap(PixmapResizedPlayer)
+
+            self.FootLab= QLabel(parent)
+            PixmapPlayerFoot = QPixmap(footPicture)
+            PixmapResizedPlayerFoot = PixmapPlayerFoot.scaled(self.PlayerWidth, self.PlayerHeight)
+            self.FootLab.setPixmap(PixmapResizedPlayerFoot)
+
             self.LabelPlayer.move(x, y)
+            self.Foots=[]
+
 
         def updatePosition(self, x, y):
             self.pX = x
@@ -62,7 +75,8 @@ class Player(QFrame):
             if(self.Live - 1) >= 0:
                 self.Live = self.Live - 1
                 self.updatePosition(self.startX, self.startY)
-                print("Nesto se desilo")
+                self.Score = self.Score - 150
+
 
         def move_up(self):
             if self.CanMove == True:
@@ -73,12 +87,22 @@ class Player(QFrame):
                     if (newX, newY) not in Map.Walls:
                         self.updatePosition(newX, newY)
                         self.update()
-                        #if (newX, newY) in Map.Space:
-                      #      PixmapFoot = QPixmap(self.PictureFoot)
-                       #     PixmapResizedFoot = PixmapFoot.scaled(40, 40)
-                        #    self.FootLabel.setPixmap(PixmapResizedFoot)
-                        #    self.FootLabel.move(newX, newY)
-                         #   self.Space.remove((newX, newY))
+                        if (newX, newY) in Map.Space:
+                            self.FootLab.move(newX, newY)
+                            temp = QLabel(self.parent())
+
+                            PixmapPlayerFoot = QPixmap(self.PictureFoot)
+                            PixmapResizedPlayerFoot = PixmapPlayerFoot.scaled(self.PlayerWidth, self.PlayerHeight)
+                            temp.setPixmap(PixmapResizedPlayerFoot)
+                            temp.move(newX, newY)
+                            Map.UseSpace.append(temp)
+                            self.Foots.append(temp)
+                            Map.UseSpace.append(self.FootLab)
+                            self.Foots.append(self.FootLab)
+                            Map.Space.remove((newX, newY))
+
+                            self.Score = self.Score+100
+
 
         def move_down(self):
             if self.CanMove == True:
@@ -89,12 +113,11 @@ class Player(QFrame):
                     if (newX, newY) not in Map.Walls:
                         self.updatePosition(newX, newY)
                         self.update()
-                       # if (newX, newY) in self.Space:
-                        #    PixmapFoot = QPixmap(self.PictureFoot)
-                         #   PixmapResizedFoot = PixmapFoot.scaled(40, 40)
-                          #  self.FootLabel.setPixmap(PixmapResizedFoot)
-                           # self.FootLabel.move(newX, newY)
-                            #self.Space.remove((newX, newY))
+                        if (newX, newY) in Map.Space:
+                            self.FootLab.move(newX, newY)
+                            Map.Space.remove((newX, newY))
+                            self.Score = self.Score + 100
+
 
         def move_right(self):
             if self.CanMove == True:
@@ -105,12 +128,10 @@ class Player(QFrame):
                     if (newX, newY) not in Map.Walls:
                         self.updatePosition(newX, newY)
                         self.update()
-                     #   if (newX, newY) in self.Space:
-                     #       PixmapFoot = QPixmap(self.PictureFoot)
-                     #       PixmapResizedFoot = PixmapFoot.scaled(40, 40)
-                     #       self.FootLabel.setPixmap(PixmapResizedFoot)
-                     #       self.FootLabel.move(newX, newY)
-                     #       self.Space.remove((newX, newY))
+                        if (newX, newY) in Map.Space:
+                            self.FootLab.move(newX, newY)
+                            Map.Space.remove((newX, newY))
+                            self.Score = self.Score + 100
 
 
         def move_left(self):
@@ -122,12 +143,10 @@ class Player(QFrame):
                     if (newX, newY) not in Map.Walls:
                         self.updatePosition(newX, newY)
                         self.update()
-                     #   if (newX, newY) in self.Space:
-                     #       PixmapFoot = QPixmap(self.PictureFoot)
-                     #       PixmapResizedFoot = PixmapFoot.scaled(40, 40)
-                     #       self.FootLabel.setPixmap(PixmapResizedFoot)
-                     #       self.FootLabel.move(newX, newY)
-                     #       self.Space.remove((newX, newY))
+                        if (newX, newY) in Map.Space:
+                            self.FootLab.move(newX, newY)
+                            Map.Space.remove((newX, newY))
+                            self.Score = self.Score + 100
 
 
 
