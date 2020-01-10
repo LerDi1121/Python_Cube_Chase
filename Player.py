@@ -78,8 +78,10 @@ class Player(QFrame):
                 self.pY= self.startY
                 self.updatePosition(self.startX, self.startY)
                 self.Score = self.Score - 150
+                self.update()
                 if self.Live == 0:
                     self.CanMove = False
+                    self.update()
             self.update()
 
 

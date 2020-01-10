@@ -13,7 +13,7 @@ class CollisionProcess(mp.Process):
     def __work__(self, in_q: mp.Queue, out_q: mp.Queue ):
 
         while True:
-
+            temp= False
             tp = in_q.get()
             enemies = tp[1]
             players = tp[0]
@@ -21,7 +21,12 @@ class CollisionProcess(mp.Process):
                 for p in range(len(players)):
                     if enemies[e][1] == players[p][1] and enemies[e][0] == players[p][0]:
                         out_q.put(players[p][2])
-
+                        temp = True
+                        time.sleep(0.01)
+                        break
+                if temp:
+                    time.sleep(0.01)
+                    break
 
             time.sleep(0.01)
             out_q.put(-1)

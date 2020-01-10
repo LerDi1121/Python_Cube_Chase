@@ -25,6 +25,10 @@ class CollisionWorker(Worker):
                 for p in range(len(self.players)):
                     if(self.players[p].ID == val):
                         self.players[p].Dead.emit()
-                        time.sleep(0.01)
+
+                        self.o_p.empty()
+                        #self.update.emit()
+                        break
+
 
             time.sleep(0.01)
