@@ -20,6 +20,7 @@ class LavirintP(QMainWindow):
         self.EnemyDict=[]
         self.createPlayerAndEnemy()
         self.lblPly1Score= QLabel(self)
+        self.GameOver =QLabel(self)
         self.lblPly2Score = QLabel(self)
         self.Lvlcounter=1
         self.lblPly1Score.move(565,620)
@@ -68,9 +69,22 @@ class LavirintP(QMainWindow):
         while True:
             if Map.Counter==0:
                 self.newLevel()
+            if self.PlayerDict[0].Live==0 or self.PlayerDict[1].Live==0:
+                self.gameOver()
 
             time.sleep(0.2)
 
+
+    def gameOver(self):
+        if self.PlayerDict[0].Live == 0:
+            self.GameOver.setText("Player 2 wins!!!")
+        if self.PlayerDict[1].Live == 0:
+            self.GameOver.setText("Player 1 wins!!!")
+        self.GameOver.resize(350, 60)
+        self.GameOver.move(300, 100)
+        self.GameOver.setStyleSheet("font: 40pt Comic Sans MS; color: red")
+        time.sleep(5)
+        self.hide()
 
     def newLevel(self):
         if self.PlayerDict[0] != None:
