@@ -21,16 +21,26 @@ class LavirintP(QMainWindow):
         self.createPlayerAndEnemy()
         self.lblPly1Score= QLabel(self)
         self.lblPly2Score = QLabel(self)
-
-        self.lblPly1Score.move(665,620)
-        self.lblPly1Score.resize(150,20)
+        self.Lvlcounter=1
+        self.lblPly1Score.move(565,620)
+        self.lblPly1Score.resize(250,60)
         self.lblPly1Score.setFrameStyle(3)
+        self.setStyleSheet("QLabel {font: 15pt Comic Sans MS}")
+
 
         self.lblPly2Score.move(5, 620)
-        self.lblPly2Score.resize(150, 20)
+        self.lblPly2Score.resize(250, 60)
         self.lblPly2Score.setFrameStyle(3)
-        map = Map()
-        map.wall()
+
+        self.LevelLbl = QLabel(self)
+
+        self.LevelLbl.move(370, 620)
+
+        self.LevelLbl.resize(100, 60)
+        self.LevelLbl.setFrameStyle(3)
+        self.LevelLbl.setText( "Level :" + str(self.Lvlcounter) )
+        self.map = Map()
+        self.map.wall()
         self.in_queue = Queue()
         self.out_queue = Queue()
         self.playerProcess = CollisionProcess(self.in_queue, self.out_queue)
@@ -46,12 +56,32 @@ class LavirintP(QMainWindow):
         self.thread2 = Thread(target=self.EnemyDict[1].changeCoord)
         self.thread2.daemon = True
         self.thread2.start()
+        self.thread3 = Thread(target=self.level)
+        self.thread3.daemon = True
+        self.thread3.start()
         self.UsedSpace=[]
-       # self.fp1 = footPrint(self, 10, 200)
         self.show()
 
 
 
+    def level(self):
+        while True:
+            if Map.Counter==0:
+                self.newLevel()
+
+            time.sleep(0.2)
+
+
+    def newLevel(self):
+        if self.PlayerDict[0] != None:
+            self.PlayerDict[0].newLvl.emit()
+        if self.PlayerDict[1] != None:
+            self.PlayerDict[1].newLvl.emit()
+        self.EnemyDict[0].Speed=self.EnemyDict[0].Speed - 0.05
+        self.EnemyDict[1].Speed=self.EnemyDict[1].Speed - 0.05
+        self.map.wall()
+        self.lblPly1Score.setText("Level :" + str(self.Lvlcounter))
+        time.sleep(1)
 
     def timerEvent(self, event):
         if self.PlayerDict[0] != None:
@@ -60,7 +90,7 @@ class LavirintP(QMainWindow):
             self.lblPly2Score.setText("Player 2:" + str(self.PlayerDict[1].Score) + " Lives: " +str(self.PlayerDict[1].Live))
 
     def InitStart(self):
-        self.resize(820, 640)
+        self.resize(820, 680)
         self.center()
         self.setWindowTitle("Cub Chase")
         self.center()
@@ -71,7 +101,7 @@ class LavirintP(QMainWindow):
         lbl.setPixmap(pixmap)
         QLabel.setGeometry(lbl, 0, 0, 820, 620)
         hbox.addWidget(lbl)
-        self.resize(pixmap.width(), pixmap.height()+20)
+        self.resize(pixmap.width(), pixmap.height()+60)
         self.setLayout(hbox)
 
 

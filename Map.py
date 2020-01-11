@@ -1,4 +1,4 @@
-from footprint import *
+
 
 class Map():
     Level=[
@@ -21,10 +21,13 @@ class Map():
     Walls = []
     Grass = []
     Space = []
-    UseSpace = []
+    Counter=0
 
 
     def wall(self):
+        self.Walls = []
+        self.Grass = []
+        self.Space = []
         for x in range(len(Map.Level)):
             for y in range(len(Map.Level[x])):
                 character = Map.Level[x][y]
@@ -40,24 +43,9 @@ class Map():
                     coordX = x * 40 + 10
                     coordY = y * 40 + 10
                     Map.Space.append((coordY, coordX))
-                    #ft = footPrint(self, coordY, coordX)
-                   # Map.UseSpace.append(ft)
+                    Map.Counter= Map.Counter+1
 
 
-
-    def addPict(self, x, y, id):
-        print(id)
-        print(x)
-        print(y)
-        for s in range(len(Map.UseSpace)):
-            if Map.UseSpace[s].pX == x and Map.UseSpace[s].pY== y:
-                if id == 0:
-                    Map.UseSpace[s].picture.setText('wwwww')
-
-
-                else:
-                    #Map.UseSpace[s].addPicture('images\imgfoot2_small.png')
-                    Map.UseSpace[s].picture2.setText('wwwwsdasdasdawsdww')
 
 
 
