@@ -66,10 +66,8 @@ class Player(QFrame):
         def updatePosition(self, x, y):
             self.pX = x
             self.pY = y
-            PixmapPlayer = QPixmap(self.Picture)
-            PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
-            self.LabelPlayer.setPixmap(PixmapResizedPlayer)
             self.LabelPlayer.move(x, y)
+            self.update()
 
         def deadPlayer(self):
             if(self.Live - 1) >= 0:
@@ -78,8 +76,10 @@ class Player(QFrame):
                 self.pY= self.startY
                 self.updatePosition(self.startX, self.startY)
                 self.Score = self.Score - 150
+
                 if self.Live == 0:
                     self.CanMove = False
+                    self.update()
             self.update()
 
 
