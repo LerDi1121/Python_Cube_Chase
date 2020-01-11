@@ -14,7 +14,9 @@ class CollisionProcess(mp.Process):
 
         while True:
             temp= False
-            tp = in_q.get()
+            while not in_q.empty():
+                tp = in_q.get()
+
             enemies = tp[1]
             players = tp[0]
             for e in range(len(enemies)):

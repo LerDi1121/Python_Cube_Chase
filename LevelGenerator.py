@@ -46,7 +46,10 @@ class LavirintP(QMainWindow):
         self.thread2 = Thread(target=self.EnemyDict[1].changeCoord)
         self.thread2.daemon = True
         self.thread2.start()
+        self.UsedSpace=[]
+       # self.fp1 = footPrint(self, 10, 200)
         self.show()
+
 
 
 
@@ -55,6 +58,7 @@ class LavirintP(QMainWindow):
             self.lblPly1Score.setText("Player 1:" + str(self.PlayerDict[0].Score)+ " Lives: " +str(self.PlayerDict[0].Live))
         if self.PlayerDict[1] != None:
             self.lblPly2Score.setText("Player 2:" + str(self.PlayerDict[1].Score) + " Lives: " +str(self.PlayerDict[1].Live))
+
     def InitStart(self):
         self.resize(820, 640)
         self.center()
@@ -73,8 +77,8 @@ class LavirintP(QMainWindow):
 
     def createPlayerAndEnemy(self):
 
-        self.PlayerDict.append( Player(self, 770, 570, 'images\Simba.png', 'images\imgfoot1_small.png', 0))
-        self.PlayerDict.append( Player(self, 10, 570, 'images\imgNala.png', 'images\imgfoot2_small.png',  1))
+        self.PlayerDict.append( Player(self, 770, 570, 'images\Simba.png', 0))
+        self.PlayerDict.append( Player(self, 10, 570, 'images\imgNala.png', 1))
         self.EnemyDict.append(Enemy(self, 10, 10, 'images\imgTimon.png',0))
         self.EnemyDict.append(Enemy(self, 770, 10, 'images\pumba.png',1))
 

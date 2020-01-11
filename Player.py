@@ -8,7 +8,6 @@ from Map import *
 class Player(QFrame):
         PlayerWidth = 40
         PlayerHeight = 40
-        PictureFoot = ""
         pX = 0
         pY = 0
         startX = 0
@@ -24,16 +23,15 @@ class Player(QFrame):
         down = pyqtSignal()
         left = pyqtSignal()
         right = pyqtSignal()
-        FootLab=0
         Score=0
        # parent=0
 
-        def __init__(self, parent, x, y, picture, footPicture, id):
+        def __init__(self, parent, x, y, picture,  id):
             super().__init__(parent)
 
-            self.initPlayer(parent, x, y, picture, footPicture, id)
+            self.initPlayer(parent, x, y, picture,  id)
 
-        def initPlayer(self, parent, x, y, picture, footPicture, id):
+        def initPlayer(self, parent, x, y, picture,  id):
             self.resize(800, 600)
             self.pX = x
             self.pY = y
@@ -42,25 +40,35 @@ class Player(QFrame):
             self.Live=3
             self.ID =id
             self.Picture = picture
-            self.PictureFoot = footPicture
+
             self.up.connect(self.move_up)
             self.down.connect(self.move_down)
             self.left.connect(self.move_left)
             self.right.connect(self.move_right)
             self.Dead.connect(self.deadPlayer)
             self.Score=0
+
             self.LabelPlayer = QLabel(parent)
             PixmapPlayer = QPixmap(picture)
             PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
             self.LabelPlayer.setPixmap(PixmapResizedPlayer)
-
-            self.FootLab= QLabel(parent)
-            PixmapPlayerFoot = QPixmap(footPicture)
-            PixmapResizedPlayerFoot = PixmapPlayerFoot.scaled(self.PlayerWidth, self.PlayerHeight)
-            self.FootLab.setPixmap(PixmapResizedPlayerFoot)
-
             self.LabelPlayer.move(x, y)
             self.Foots=[]
+
+            for x in range(len(Map.Level)):
+                for y in range(len(Map.Level[x])):
+                    character = Map.Level[x][y]
+                    if character == " ":
+                         coordX = x * 40 + 10
+                         coordY = y * 40 + 10
+                         fp = QLabel(parent)
+                         PixmapPlayer = QPixmap('images\imgfoo')
+                         PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
+                         fp.setPixmap(PixmapResizedPlayer)
+                         fp.move(coordY,coordX)
+
+                         self.Foots.append((fp,(coordY,coordX)))
+
 
 
         def updatePosition(self, x, y):
@@ -93,20 +101,19 @@ class Player(QFrame):
                         self.updatePosition(newX, newY)
                         self.update()
                         if (newX, newY) in Map.Space:
-                            self.FootLab.move(newX, newY)
-                            temp = QLabel(self.parent())
-
-                            PixmapPlayerFoot = QPixmap(self.PictureFoot)
-                            PixmapResizedPlayerFoot = PixmapPlayerFoot.scaled(self.PlayerWidth, self.PlayerHeight)
-                            temp.setPixmap(PixmapResizedPlayerFoot)
-                            temp.move(newX, newY)
-                            Map.UseSpace.append(temp)
-                            self.Foots.append(temp)
-                            Map.UseSpace.append(self.FootLab)
-                            self.Foots.append(self.FootLab)
+                            Map.addPict(self, newX, newY, self.ID)
                             Map.Space.remove((newX, newY))
-
                             self.Score = self.Score+100
+                            for fp in range(len(self.Foots)):
+                                if self.Foots[fp][1]==(newX,newY):
+                                    PixmapPlayer = QPixmap('images\imgfoot1_small.png')
+                                    if self.ID == 1:
+                                        PixmapPlayer = QPixmap('images\imgfoot2_small.png')
+                                    PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
+                                    self.Foots[fp][0].setPixmap(PixmapResizedPlayer)
+                                    self.Foots[fp][0].move(newX, newY)
+
+
 
 
         def move_down(self):
@@ -119,9 +126,17 @@ class Player(QFrame):
                         self.updatePosition(newX, newY)
                         self.update()
                         if (newX, newY) in Map.Space:
-                            self.FootLab.move(newX, newY)
+                            #Map.addPict(self, newX, newY, self.ID)
                             Map.Space.remove((newX, newY))
                             self.Score = self.Score + 100
+                            for fp in range(len(self.Foots)):
+                                if self.Foots[fp][1]==(newX,newY):
+                                    PixmapPlayer = QPixmap('images\imgfoot1_small.png')
+                                    if self.ID == 1:
+                                        PixmapPlayer = QPixmap('images\imgfoot2_small.png')
+                                    PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
+                                    self.Foots[fp][0].setPixmap(PixmapResizedPlayer)
+                                    self.Foots[fp][0].move(newX, newY)
 
 
         def move_right(self):
@@ -134,9 +149,18 @@ class Player(QFrame):
                         self.updatePosition(newX, newY)
                         self.update()
                         if (newX, newY) in Map.Space:
-                            self.FootLab.move(newX, newY)
+                            #Map.addPict(self, newX, newY, self.ID)
                             Map.Space.remove((newX, newY))
                             self.Score = self.Score + 100
+                            for fp in range(len(self.Foots)):
+                                if self.Foots[fp][1]==(newX,newY):
+                                    PixmapPlayer = QPixmap('images\imgfoot1_small.png')
+                                    if self.ID==1:
+                                        PixmapPlayer = QPixmap('images\imgfoot2_small.png')
+
+                                    PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
+                                    self.Foots[fp][0].setPixmap(PixmapResizedPlayer)
+                                    self.Foots[fp][0].move(newX, newY)
 
 
         def move_left(self):
@@ -149,9 +173,17 @@ class Player(QFrame):
                         self.updatePosition(newX, newY)
                         self.update()
                         if (newX, newY) in Map.Space:
-                            self.FootLab.move(newX, newY)
+                          # Map.addPict(self, newX, newY, self.ID)
                             Map.Space.remove((newX, newY))
                             self.Score = self.Score + 100
+                            for fp in range(len(self.Foots)):
+                                if self.Foots[fp][1] == (newX, newY):
+                                    PixmapPlayer = QPixmap('images\imgfoot1_small.png')
+                                    if self.ID==1:
+                                        PixmapPlayer = QPixmap('images\imgfoot2_small.png')
+                                    PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
+                                    self.Foots[fp][0].setPixmap(PixmapResizedPlayer)
+                                    self.Foots[fp][0].move(newX, newY)
 
 
 
