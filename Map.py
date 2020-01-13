@@ -22,12 +22,14 @@ class Map():
     Grass = []
     Space = []
     Counter=0
+    TrapAndForce=[]
 
 
     def wall(self):
         self.Walls = []
         self.Grass = []
         self.Space = []
+        self.TrapAndForce=[]
         for x in range(len(Map.Level)):
             for y in range(len(Map.Level[x])):
                 character = Map.Level[x][y]
@@ -39,11 +41,14 @@ class Map():
                     coordX = x * 40 + 10
                     coordY = y * 40 + 10
                     Map.Grass.append((coordY, coordX))
+                    Map.TrapAndForce.append((coordY, coordX))
                 if character == " ":
                     coordX = x * 40 + 10
                     coordY = y * 40 + 10
                     Map.Space.append((coordY, coordX))
+                    Map.TrapAndForce.append((coordY, coordX))
                     Map.Counter= Map.Counter+1
+
 
 
 

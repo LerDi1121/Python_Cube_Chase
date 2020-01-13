@@ -1,5 +1,7 @@
 from Player  import *
+from TrapAndForce import TrapAndForce
 from collision_proces import *
+from collision_process_trap import CollisionProcessTrap
 from collision_worker import *
 from multiprocessing import Queue
 from Pumba import *
@@ -8,6 +10,8 @@ from threading import Thread
 import sys
 
 from Map import *
+from collision_worker_traps import CollisionWorkerTrap
+
 
 class LavirintP(QMainWindow):
 
@@ -18,6 +22,8 @@ class LavirintP(QMainWindow):
         self.InitStart()
         self.PlayerDict = []
         self.EnemyDict=[]
+        self.Traps=[]
+        #trap = TrapAndForce(self,10,10, 1,1)
         self.createPlayerAndEnemy()
         self.lblPly1Score= QLabel(self)
         self.GameOver =QLabel(self)
@@ -27,7 +33,7 @@ class LavirintP(QMainWindow):
         self.lblPly1Score.resize(250,60)
         self.lblPly1Score.setFrameStyle(3)
         self.setStyleSheet("QLabel {font: 15pt Comic Sans MS}")
-
+        self.defTraps()
 
         self.lblPly2Score.move(5, 620)
         self.lblPly2Score.resize(250, 60)
@@ -44,11 +50,22 @@ class LavirintP(QMainWindow):
         self.map.wall()
         self.in_queue = Queue()
         self.out_queue = Queue()
-        self.playerProcess = CollisionProcess(self.in_queue, self.out_queue)
+        self.in_queue_trap = Queue()
+        self.out_queue_trap = Queue()
+        #enemy and ply
+        self.playerProcess = CollisionProcess(self.in_queue_trap, self.out_queue_trap)
         self.playerProcess.start()
-        self.playerCollisionWorker = CollisionWorker(self.PlayerDict, self.EnemyDict, self.in_queue,self.out_queue)
+        self.playerCollisionWorker = CollisionWorker(self.PlayerDict, self.EnemyDict, self.in_queue_trap,self.out_queue_trap)
         self.playerCollisionWorker.update.connect(self.close_app)
         self.playerCollisionWorker.start()
+
+        #ply and traps
+        self.TrapActiveProcess = CollisionProcessTrap(self.in_queue, self.out_queue)
+        self.TrapActiveProcess.start()
+        self.TrapActiveCollisionWorker = CollisionWorkerTrap(self.PlayerDict, self.Traps, self.in_queue, self.out_queue)
+        self.TrapActiveCollisionWorker.update.connect(self.close_app)
+        self.TrapActiveCollisionWorker.start()
+
         self.timer = QBasicTimer()
         self.timer.start(30, self)
         self.thread1 = Thread(target=self.EnemyDict[0].changeCoord)
@@ -62,6 +79,26 @@ class LavirintP(QMainWindow):
         self.thread3.start()
         self.UsedSpace=[]
         self.show()
+
+
+    def defTraps(self):
+        fp= TrapAndForce(self, 450 ,10 ,1,1)
+        fp1 = TrapAndForce(self, 610, 130, 2, 1)
+        fp2= TrapAndForce(self, 90, 290, 3, 1)
+        fp3 = TrapAndForce(self, 170, 370, 4,1)
+        fp4 = TrapAndForce(self, 730, 490, 5,1)
+        self.Traps.append(fp)
+        self.Traps.append(fp1)
+        self.Traps.append(fp2)
+        self.Traps.append(fp3)
+        self.Traps.append(fp4)
+        print(self.Traps)
+        print(fp.ID)
+        print(fp1.ID)
+        print(fp2.ID)
+        print(fp3.ID)
+        print(fp4.ID)
+
 
 
 

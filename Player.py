@@ -122,6 +122,7 @@ class Player(QFrame):
                                     PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
                                     self.Foots[fp][0].setPixmap(PixmapResizedPlayer)
                                     self.Foots[fp][0].move(newX, newY)
+                                    self.updatePosition(newX, newY)
 
 
 
@@ -147,6 +148,7 @@ class Player(QFrame):
                                     PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
                                     self.Foots[fp][0].setPixmap(PixmapResizedPlayer)
                                     self.Foots[fp][0].move(newX, newY)
+                                    self.updatePosition(newX, newY)
 
 
         def move_right(self):
@@ -171,6 +173,7 @@ class Player(QFrame):
                                     PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
                                     self.Foots[fp][0].setPixmap(PixmapResizedPlayer)
                                     self.Foots[fp][0].move(newX, newY)
+                                    self.updatePosition(newX, newY)
 
 
         def move_left(self):
@@ -194,6 +197,7 @@ class Player(QFrame):
                                     PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
                                     self.Foots[fp][0].setPixmap(PixmapResizedPlayer)
                                     self.Foots[fp][0].move(newX, newY)
+                                    self.updatePosition(newX, newY)
 
 
 
