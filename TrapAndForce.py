@@ -37,13 +37,14 @@ class TrapAndForce(QFrame):
 
     def trap(self, enemy):
         print("")
+
     def active(self):
         self.isActive= True
         Pixmap = QPixmap("images\zamkaAktivna.png")
         PixmapResized = Pixmap.scaled(40, 40)
         self.Label.setPixmap(PixmapResized)
         loop = QEventLoop()
-        QTimer.singleShot(5000, loop.quit)
+        QTimer.singleShot(10000, loop.quit)
         loop.exec_()
         Pixmap = QPixmap("images\zamkaNeaktivna.png")
         PixmapResized = Pixmap.scaled(40, 40)

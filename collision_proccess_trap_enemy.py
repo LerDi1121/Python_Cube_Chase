@@ -5,7 +5,7 @@ import multiprocessing as mp
 
 from Pumba import Enemy
 
-class CollisionProcessTrap(mp.Process):
+class CollisionProcessTrapEnemy(mp.Process):
 
     def __init__(self, in_q : mp.Queue,out_q : mp.Queue, ):
         super().__init__(target=self.__work__, args=[in_q, out_q])
@@ -14,19 +14,20 @@ class CollisionProcessTrap(mp.Process):
 
         while True:
             temp= False
-            #tp= None
             while not in_q.empty():
                 tp = in_q.get()
 
             traps = tp[1]
-            players = tp[0]
+            enemys = tp[0]
             for e in range(len(traps)):
-                for p in range(len(players)):
-                    if traps[e][1] == players[p][1] and traps[e][0] == players[p][0]:
-                        out_q.put(traps[e][2])
-                        temp = True
-                        time.sleep(0.1)
-                        break
+                for p in range(len(enemys)):
+                    if traps[e][1] == enemys[p][1] and traps[e][0] == enemys[p][0]:
+                       if traps[e][3]==True:
+                                out_q.put((traps[e][2],enemys[p][2]))
+                                print("**")
+                                temp = True
+                                time.sleep(0.1)
+                                break
                 if temp:
                     time.sleep(0.1)
                     break

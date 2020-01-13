@@ -1,5 +1,6 @@
 from Player  import *
 from TrapAndForce import TrapAndForce
+from collision_proccess_trap_enemy import CollisionProcessTrapEnemy
 from collision_proces import *
 from collision_process_trap import CollisionProcessTrap
 from collision_worker import *
@@ -10,7 +11,10 @@ from threading import Thread
 import sys
 
 from Map import *
+from collision_worker_trap_enemy import CollisionWorkerTrapEnemy
 from collision_worker_traps import CollisionWorkerTrap
+
+
 
 
 class LavirintP(QMainWindow):
@@ -52,17 +56,25 @@ class LavirintP(QMainWindow):
         self.out_queue = Queue()
         self.in_queue_trap = Queue()
         self.out_queue_trap = Queue()
+        self.in_queue_trap_enemy = Queue()
+        self.out_queue_trap_enemy = Queue()
         #enemy and ply
-        self.playerProcess = CollisionProcess(self.in_queue_trap, self.out_queue_trap)
+        self.playerProcess = CollisionProcess(self.in_queue, self.out_queue)
         self.playerProcess.start()
-        self.playerCollisionWorker = CollisionWorker(self.PlayerDict, self.EnemyDict, self.in_queue_trap,self.out_queue_trap)
+        self.playerCollisionWorker = CollisionWorker(self.PlayerDict, self.EnemyDict, self.in_queue,self.out_queue)
         self.playerCollisionWorker.update.connect(self.close_app)
         self.playerCollisionWorker.start()
 
         #ply and traps
-        self.TrapActiveProcess = CollisionProcessTrap(self.in_queue, self.out_queue)
+        self.TrapEnemyProcess = CollisionProcessTrap(self.in_queue_trap, self.out_queue_trap)
+        self.TrapEnemyProcess.start()
+        self.TrapEnemyCollisionWorker = CollisionWorkerTrap(self.PlayerDict, self.Traps, self.in_queue_trap, self.out_queue_trap)
+        self.TrapEnemyCollisionWorker.update.connect(self.close_app)
+        self.TrapEnemyCollisionWorker.start()
+        # enemy and traps
+        self.TrapActiveProcess = CollisionProcessTrapEnemy(self.in_queue_trap_enemy, self.out_queue_trap_enemy)
         self.TrapActiveProcess.start()
-        self.TrapActiveCollisionWorker = CollisionWorkerTrap(self.PlayerDict, self.Traps, self.in_queue, self.out_queue)
+        self.TrapActiveCollisionWorker = CollisionWorkerTrapEnemy(self.EnemyDict, self.Traps, self.in_queue_trap_enemy, self.out_queue_trap_enemy)
         self.TrapActiveCollisionWorker.update.connect(self.close_app)
         self.TrapActiveCollisionWorker.start()
 
@@ -92,12 +104,7 @@ class LavirintP(QMainWindow):
         self.Traps.append(fp2)
         self.Traps.append(fp3)
         self.Traps.append(fp4)
-        print(self.Traps)
-        print(fp.ID)
-        print(fp1.ID)
-        print(fp2.ID)
-        print(fp3.ID)
-        print(fp4.ID)
+
 
 
 
