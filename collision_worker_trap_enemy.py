@@ -25,13 +25,10 @@ class CollisionWorkerTrapEnemy(Worker):
                 for p in range(len(self.enemys)):
                     if(self.enemys[p].ID == val[1]):
                         self.enemys[p].inTrap.emit()
-                        #print(p)
-
-                        #self.update.emit()
-                for p in range(len(self.enemys)):
+                for p in range(len(self.traps)):
                     if (self.traps[p].ID == val[0]):
                         print("nesto 2")
-                        self.traps[p].isActive= False
+                        self.traps[p].deactiveTrap.emit()
 
                 while not self.o_p.empty():
                     self.o_p.get()

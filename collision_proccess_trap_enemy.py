@@ -24,7 +24,6 @@ class CollisionProcessTrapEnemy(mp.Process):
                     if traps[e][1] == enemys[p][1] and traps[e][0] == enemys[p][0]:
                        if traps[e][3]==True:
                                 out_q.put((traps[e][2],enemys[p][2]))
-                                print("**")
                                 temp = True
                                 time.sleep(0.1)
                                 break

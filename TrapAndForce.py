@@ -16,6 +16,7 @@ class TrapAndForce(QFrame):
     TrapOrForce= 1
 
     isActive= False
+    deactiveTrap= pyqtSignal()
     activeTrap= pyqtSignal()
 
     def __init__(self, parent, x, y,  id, tf):
@@ -27,6 +28,7 @@ class TrapAndForce(QFrame):
         self.pY=y
         self.ID= id
         self.activeTrap.connect(self.active)
+        self.deactiveTrap.connect(self.deactive)
         self.TrapOrForce= tf
         self.Label = QLabel(parent)
         Pixmap = QPixmap("images\zamkaNeaktivna.png")
@@ -37,7 +39,11 @@ class TrapAndForce(QFrame):
 
     def trap(self, enemy):
         print("")
-
+    def deactive(self):
+        Pixmap = QPixmap("images\zamkaNeaktivna.png")
+        PixmapResized = Pixmap.scaled(40, 40)
+        self.Label.setPixmap(PixmapResized)
+        self.isActive = False
     def active(self):
         self.isActive= True
         Pixmap = QPixmap("images\zamkaAktivna.png")
