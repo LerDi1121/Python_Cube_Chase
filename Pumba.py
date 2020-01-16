@@ -15,7 +15,6 @@ class Enemy(QFrame):
         EnemyHeight = 40
         pX = 0
         pY = 0
-        CanMove= True
         LabelEnemy = 0
         Picture = ""
         Speed = 0.3
@@ -43,7 +42,7 @@ class Enemy(QFrame):
 
             self.LabelEnemy.setPixmap(PixmapResizedEnemy)
             self.timer = QBasicTimer()
-            self.timer.start(10, self)
+            self.timer.start(10, self) #na svakid 10 milisek on mu apdejtuje poziciju bez obzira da li su se promenile koord.
             self.LabelEnemy.move(x, y)
             #self.t = Thread(target=self.moveEnemy)
             #self.t.daemon = True
@@ -112,7 +111,6 @@ class Enemy(QFrame):
 
         def moveEnemy(self):
             self.LabelEnemy.move(self.pX, self.pY)
-
 
 
 

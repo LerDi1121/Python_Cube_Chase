@@ -31,7 +31,7 @@ class LavirintP(QMainWindow):
         #trap = TrapAndForce(self,10,10, 1,1)
         self.createPlayerAndEnemy()
         self.lblPly1Score= QLabel(self)
-        self.GameOver =QLabel(self)
+        self.GameOver = QLabel(self)
         self.lblPly2Score = QLabel(self)
         self.Lvlcounter=1
         self.lblPly1Score.move(565,620)
@@ -53,11 +53,11 @@ class LavirintP(QMainWindow):
         self.LevelLbl.setText( "Level :" + str(self.Lvlcounter) )
         self.map = Map()
         self.map.wall()
-        self.in_queue = Queue()
+        self.in_queue = Queue() #za koliziju igraca i neprijatelja
         self.out_queue = Queue()
-        self.in_queue_trap = Queue()
+        self.in_queue_trap = Queue() #za koliziju za aktiviranje zamke (kad igrac predje preko zamke)
         self.out_queue_trap = Queue()
-        self.in_queue_trap_enemy = Queue()
+        self.in_queue_trap_enemy = Queue() #za koliziju kad neprijatelj predje preko zamke
         self.out_queue_trap_enemy = Queue()
         #enemy and ply
         self.playerProcess = CollisionProcess(self.in_queue, self.out_queue)
@@ -81,6 +81,7 @@ class LavirintP(QMainWindow):
 
         self.timer = QBasicTimer()
         self.timer.start(30, self)
+
         self.thread1 = Thread(target=self.EnemyDict[0].changeCoord)
         self.thread1.daemon = True
         self.thread1.start()
@@ -105,9 +106,6 @@ class LavirintP(QMainWindow):
         self.Traps.append(fp2)
         self.Traps.append(fp3)
         self.Traps.append(fp4)
-
-
-
 
 
     def level(self):
@@ -190,20 +188,28 @@ class LavirintP(QMainWindow):
     def keyPressEvent(self, e : QKeyEvent):
         if e.key() == Qt.Key_Up:
             self.PlayerDict[0].up.emit()
+            time.sleep(0.05)
         if e.key() == Qt.Key_Down:
             self.PlayerDict[0].down.emit()
+            time.sleep(0.05)
         if e.key() == Qt.Key_Left:
             self.PlayerDict[0].left.emit()
+            time.sleep(0.05)
         if e.key() == Qt.Key_Right:
             self.PlayerDict[0].right.emit()
+            time.sleep(0.05)
         if e.key()==Qt.Key_W:
             self.PlayerDict[1].up.emit()
+            time.sleep(0.05)
         if e.key() == Qt.Key_S:
             self.PlayerDict[1].down.emit()
+            time.sleep(0.05)
         if e.key()==Qt.Key_D:
             self.PlayerDict[1].right.emit()
+            time.sleep(0.05)
         if e.key() == Qt.Key_A:
             self.PlayerDict[1].left.emit()
+            time.sleep(0.05)
 
 
 

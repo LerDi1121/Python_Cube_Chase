@@ -15,15 +15,15 @@ class CollisionWorker(Worker):
 
     def work(self):
         while True:
-            enem = list(map(lambda x: [x.pX, x.pY, x.CanMove], self.enemies))
-            ply = list(map(lambda x: [x.pX, x.pY, x.ID], self.players))
+            enem = list(map(lambda x: [x.pX, x.pY, x.CanMove], self.enemies)) #za svako x (sve u enemy) uzmi px py i can move(parametre)
+            ply = list(map(lambda x: [x.pX, x.pY, x.ID], self.players))  #isto i ovde
 
-            self.i_p.put([ply, enem])
-            val = self.o_p.get()
+            self.i_p.put([ply, enem]) #stavlja to od gore tu
+            val = self.o_p.get()  #vraca id igraca
 
             if val != -1:
                 for p in range(len(self.players)):
-                    if(self.players[p].ID == val):
+                    if(self.players[p].ID == val):  #ako je plejer sa tim idjom i ubija ga ako je taj id
                         self.players[p].Dead.emit()
 
 

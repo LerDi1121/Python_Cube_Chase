@@ -13,7 +13,7 @@ class CollisionWorkerTrapEnemy(Worker):
         self.i_p = in_q
         self.o_p = out_q
 
-    def work(self):
+    def work(self): #kad neprijatelj stane na zamku
         while True:
             trps = list(map(lambda x: [x.pX, x.pY, x.ID, x.isActive], self.traps))
             enm = list(map(lambda x: [x.pX, x.pY,x.ID], self.enemys))
