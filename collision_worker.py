@@ -15,7 +15,7 @@ class CollisionWorker(Worker):
 
     def work(self):
         while True:
-            enem = list(map(lambda x: [x.pX, x.pY], self.enemies))
+            enem = list(map(lambda x: [x.pX, x.pY, x.CanMove], self.enemies))
             ply = list(map(lambda x: [x.pX, x.pY, x.ID], self.players))
 
             self.i_p.put([ply, enem])

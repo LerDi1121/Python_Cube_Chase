@@ -1,4 +1,5 @@
 import time
+from threading import Thread
 
 from PyQt5.QtWidgets import QMainWindow, QFrame, QDesktopWidget, QApplication, QWidget, QHBoxLayout, QLabel
 from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal, QEventLoop, QTimer
@@ -45,17 +46,22 @@ class TrapAndForce(QFrame):
         self.Label.setPixmap(PixmapResized)
         self.isActive = False
     def active(self):
-        self.isActive= True
-        Pixmap = QPixmap("images\zamkaAktivna.png")
-        PixmapResized = Pixmap.scaled(40, 40)
-        self.Label.setPixmap(PixmapResized)
-        loop = QEventLoop()
-        QTimer.singleShot(10000, loop.quit)
-        loop.exec_()
+        if self.isActive==False:
+            self.isActive= True
+            Pixmap = QPixmap("images\zamkaAktivna.png")
+            PixmapResized = Pixmap.scaled(40, 40)
+            self.Label.setPixmap(PixmapResized)
+            thread1 = Thread(target=self.activeForThread)
+            thread1.start()
+
+
+    def activeForThread(self):
+        time.sleep(10)
         Pixmap = QPixmap("images\zamkaNeaktivna.png")
         PixmapResized = Pixmap.scaled(40, 40)
         self.Label.setPixmap(PixmapResized)
         self.isActive = False
+
 
     def force(self, player):
         print("")

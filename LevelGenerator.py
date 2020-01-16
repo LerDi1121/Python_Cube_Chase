@@ -27,6 +27,7 @@ class LavirintP(QMainWindow):
         self.PlayerDict = []
         self.EnemyDict=[]
         self.Traps=[]
+        self.defTraps()
         #trap = TrapAndForce(self,10,10, 1,1)
         self.createPlayerAndEnemy()
         self.lblPly1Score= QLabel(self)
@@ -37,7 +38,7 @@ class LavirintP(QMainWindow):
         self.lblPly1Score.resize(250,60)
         self.lblPly1Score.setFrameStyle(3)
         self.setStyleSheet("QLabel {font: 15pt Comic Sans MS}")
-        self.defTraps()
+
 
         self.lblPly2Score.move(5, 620)
         self.lblPly2Score.resize(250, 60)

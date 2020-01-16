@@ -22,10 +22,11 @@ class CollisionProcess(mp.Process):
             for e in range(len(enemies)):
                 for p in range(len(players)):
                     if enemies[e][1] == players[p][1] and enemies[e][0] == players[p][0]:
-                        out_q.put(players[p][2])
-                        temp = True
-                        time.sleep(0.1)
-                        break
+                        if enemies[e][2]== True:
+                            out_q.put(players[p][2])
+                            temp = True
+                            time.sleep(0.1)
+                            break
                 if temp:
                     time.sleep(0.1)
                     break

@@ -61,10 +61,16 @@ class Enemy(QFrame):
 
         def inTrap2(self):
             self.CanMove= False
-            loop = QEventLoop()
-            QTimer.singleShot(5000, loop.quit)
-            loop.exec_()
+            thread1 = Thread(target=self.inTrapforThread)
+            thread1.start()
+
+
+        def inTrapforThread(self):
+            time.sleep(10)
             self.CanMove = True
+
+
+
 
 
         def changeCoord(self):
