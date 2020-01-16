@@ -26,7 +26,6 @@ class CollisionProcessTrapEnemy(mp.Process):
                                 out_q.put((traps[e][2],enemys[p][2]))
                                 temp = True
                                 time.sleep(0.1)
-                                print("upao")
                                 break
                 if temp:
                     time.sleep(0.1)

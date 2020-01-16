@@ -81,7 +81,7 @@ class TrapAndForce(QFrame):
 
 
     def deactiveForce(self):
-        Pixmap = QPixmap("images\zimgUpik.png")
+        Pixmap = QPixmap("images\zimggdfgdUpik.png")
         PixmapResized = Pixmap.scaled(40, 40)
         self.Label.setPixmap(PixmapResized)
 

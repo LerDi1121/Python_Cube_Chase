@@ -34,26 +34,15 @@ class LavirintP(QMainWindow):
         self.GameOver = QLabel(self)
         self.lblPly2Score = QLabel(self)
         self.Lvlcounter=1
-        self.lblPly1Score.move(565,620)
-        self.lblPly1Score.resize(250,60)
-        self.lblPly1Score.setFrameStyle(3)
-        self.setStyleSheet("QLabel {font: 15pt Comic Sans MS}")
-
-
-        self.lblPly2Score.move(5, 620)
-        self.lblPly2Score.resize(250, 60)
-        self.lblPly2Score.setFrameStyle(3)
-
         self.LevelLbl = QLabel(self)
+        self.lblScore()
 
-        self.LevelLbl.move(370, 620)
-
-        self.LevelLbl.resize(100, 60)
-        self.LevelLbl.setFrameStyle(3)
-        self.LevelLbl.setText( "Level :" + str(self.Lvlcounter) )
         self.map = Map()
-        self.force = TrapAndForce(self,1,2)
+
         self.map.wall()
+
+        self.force = TrapAndForce(self, 1, 2)
+
         self.in_queue = Queue() #za koliziju igraca i neprijatelja
         self.out_queue = Queue()
         self.in_queue_trap = Queue() #za koliziju za aktiviranje zamke (kad igrac predje preko zamke)
@@ -96,6 +85,7 @@ class LavirintP(QMainWindow):
         self.threadForce = Thread(target=self.ForceLogic)
         self.threadForce.daemon = True
         self.threadForce.start()
+
         self.UsedSpace=[]
         self.show()
 
@@ -111,6 +101,23 @@ class LavirintP(QMainWindow):
         self.Traps.append(fp2)
         self.Traps.append(fp3)
         self.Traps.append(fp4)
+
+
+    def lblScore(self):
+        self.lblPly1Score.move(565, 620)
+        self.lblPly1Score.resize(250, 60)
+        self.lblPly1Score.setFrameStyle(3)
+        self.setStyleSheet("QLabel {font: 15pt Comic Sans MS}")
+
+        self.lblPly2Score.move(5, 620)
+        self.lblPly2Score.resize(250, 60)
+        self.lblPly2Score.setFrameStyle(3)
+        self.LevelLbl.move(370, 620)
+
+        self.LevelLbl.resize(100, 60)
+        self.LevelLbl.setFrameStyle(3)
+        self.LevelLbl.setText("Level :" + str(self.Lvlcounter))
+
 
     def ForceLogic(self):
         while True:
@@ -148,7 +155,7 @@ class LavirintP(QMainWindow):
         self.GameOver.move(300, 100)
         self.GameOver.setStyleSheet("font: 40pt Comic Sans MS; color: red")
         time.sleep(5)
-        self.hide()
+        #self.hide()
 
     def newLevel(self):
         if self.PlayerDict[0] != None:
@@ -200,7 +207,17 @@ class LavirintP(QMainWindow):
 
 
     def close_app(self):
+        self.playerCollisionWorker.ind =False
+        self.playerCollisionWorker.thread.terminate()
+        self.playerProcess.terminate()
 
+        self.TrapActiveCollisionWorker.ind = False
+        self.TrapActiveCollisionWorker.thread.terminate()
+        self.TrapActiveProcess.terminate()
+
+        self.TrapEnemyCollisionWorker.ind = False
+        self.TrapEnemyCollisionWorker.thread.terminate()
+        self.TrapEnemyProcess.terminate()
         self.close()
 
 

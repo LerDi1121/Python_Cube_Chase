@@ -19,6 +19,7 @@ class CollisionWorker(Worker):
             ply = list(map(lambda x: [x.pX, x.pY, x.ID], self.players))  #isto i ovde
 
             self.i_p.put([ply, enem]) #stavlja to od gore tu
+
             val = self.o_p.get()  #vraca id igraca
 
             if val != -1:

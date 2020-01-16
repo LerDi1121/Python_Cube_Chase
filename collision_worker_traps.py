@@ -19,6 +19,7 @@ class CollisionWorkerTrap(Worker):
             ply = list(map(lambda x: [x.pX, x.pY], self.players))
 
             self.i_p.put([ply, trps])
+
             val = self.o_p.get()
             if val != -1:
                 for p in range(len(self.traps)):
