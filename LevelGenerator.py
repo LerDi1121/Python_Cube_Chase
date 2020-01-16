@@ -52,6 +52,7 @@ class LavirintP(QMainWindow):
         self.LevelLbl.setFrameStyle(3)
         self.LevelLbl.setText( "Level :" + str(self.Lvlcounter) )
         self.map = Map()
+        self.force = TrapAndForce(self,1,2)
         self.map.wall()
         self.in_queue = Queue() #za koliziju igraca i neprijatelja
         self.out_queue = Queue()
@@ -91,21 +92,41 @@ class LavirintP(QMainWindow):
         self.thread3 = Thread(target=self.level)
         self.thread3.daemon = True
         self.thread3.start()
+
+        self.threadForce = Thread(target=self.ForceLogic)
+        self.threadForce.daemon = True
+        self.threadForce.start()
         self.UsedSpace=[]
         self.show()
 
 
     def defTraps(self):
-        fp= TrapAndForce(self, 450 ,10 ,1,1)
-        fp1 = TrapAndForce(self, 610, 130, 2, 1)
-        fp2= TrapAndForce(self, 90, 290, 3, 1)
-        fp3 = TrapAndForce(self, 170, 370, 4,1)
-        fp4 = TrapAndForce(self, 730, 490, 5,1)
+        fp= TrapAndForce(self ,1,1)
+        fp1 = TrapAndForce(self, 2, 1)
+        fp2= TrapAndForce(self, 3, 1)
+        fp3 = TrapAndForce(self,4,1)
+        fp4 = TrapAndForce(self, 5,1)
         self.Traps.append(fp)
         self.Traps.append(fp1)
         self.Traps.append(fp2)
         self.Traps.append(fp3)
         self.Traps.append(fp4)
+
+    def ForceLogic(self):
+        while True:
+            self.force.activeForce()
+            time.sleep(5)
+            #provera sa poklapanjem koordinata
+            for i in range(len(self.PlayerDict)):
+                if self.force.pX == self.PlayerDict[i].pX and self.force.pY == self.PlayerDict[i].pY:
+                    forceInt = randint(0, 200)
+                    if forceInt % 2 == 0:
+                        self.PlayerDict[i].Live = self.PlayerDict[i].Live + 1
+                    else:
+                        self.PlayerDict[i].Score = self.PlayerDict[i].Score - 1234
+
+            self.force.deactiveForce()
+            time.sleep(5)
 
 
     def level(self):

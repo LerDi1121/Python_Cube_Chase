@@ -1,4 +1,5 @@
 import time
+from random import randint
 from threading import Thread
 
 from PyQt5.QtWidgets import QMainWindow, QFrame, QDesktopWidget, QApplication, QWidget, QHBoxLayout, QLabel
@@ -12,27 +13,38 @@ class TrapAndForce(QFrame):
     pY=0
     picture= ""
     TrapOrForce= 1
-
+    space=[]
     isActive= False
     deactiveTrap= pyqtSignal()
     activeTrap= pyqtSignal()
 
-    def __init__(self, parent, x, y,  id, tf):  #poslednji param. je da li je sila ili zamka
+    def __init__(self, parent,  id, tf):  #poslednji param. je da li je sila ili zamka
         super().__init__(parent)
 
-        self.initTrapAndForce(parent, x, y,  id, tf)
-    def initTrapAndForce(self, parent,x,y, id, tf):
-        self.pX=x
-        self.pY=y
+        self.initTrapAndForce(parent,  id, tf)
+
+    def initTrapAndForce(self, parent, id, tf):
+        for x in range(len(Map.Level)):
+            for y in range(len(Map.Level[x])):
+                character = Map.Level[x][y]
+                if character != "X":
+                    coordX = x * 40 + 10
+                    coordY = y * 40 + 10
+                    self.space.append((coordY, coordX))
+        val = randint(0,len(self.space))
+        (self.pX,self.pY)= self.space[val]
         self.ID= id
         self.activeTrap.connect(self.active)
         self.deactiveTrap.connect(self.deactive)
         self.TrapOrForce= tf
         self.Label = QLabel(parent)
-        Pixmap = QPixmap("images\zamkaNeaktivna.png")
+        if self.TrapOrForce==2:
+            Pixmap = QPixmap("images\imgUtnik.png")
+        else:
+            Pixmap = QPixmap("images\zamkaNeaktivna.png")
         PixmapResized = Pixmap.scaled(40,40)
         self.Label.setPixmap(PixmapResized)
-        self.Label.move(x, y)
+        self.Label.move(self.pX, self.pY)
 
     def deactive(self):
         Pixmap = QPixmap("images\zamkaNeaktivna.png")
@@ -57,5 +69,19 @@ class TrapAndForce(QFrame):
         self.isActive = False
 
 
-    def force(self, player):
-        print("")
+    def activeForce(self):
+
+        val = randint(0,len(self.space))
+        (self.pX,self.pY)= self.space[val]
+
+        Pixmap = QPixmap("images\imgUpitnik.png")
+        PixmapResized = Pixmap.scaled(40, 40)
+        self.Label.setPixmap(PixmapResized)
+        self.Label.move(self.pX, self.pY)
+
+
+    def deactiveForce(self):
+        Pixmap = QPixmap("images\zimgUpik.png")
+        PixmapResized = Pixmap.scaled(40, 40)
+        self.Label.setPixmap(PixmapResized)
+

@@ -50,11 +50,6 @@ class Player(QFrame):
             self.newLvl.connect(self.newLevel)
             self.Score=0
 
-            self.LabelPlayer = QLabel(parent)
-            PixmapPlayer = QPixmap(picture)
-            PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
-            self.LabelPlayer.setPixmap(PixmapResizedPlayer)
-            self.LabelPlayer.move(x, y)
             self.Foots=[]
 
             for x in range(len(Map.Level)):
@@ -71,7 +66,11 @@ class Player(QFrame):
 
                          self.Foots.append((fp,(coordY,coordX)))
 
-
+            self.LabelPlayer = QLabel(parent)
+            PixmapPlayer = QPixmap(picture)
+            PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
+            self.LabelPlayer.setPixmap(PixmapResizedPlayer)
+            self.LabelPlayer.move(x, y)
 
         def updatePosition(self, x, y):
             self.pX = x
