@@ -44,19 +44,9 @@ class Enemy(QFrame):
             self.timer = QBasicTimer()
             self.timer.start(10, self) #na svakid 10 milisek on mu apdejtuje poziciju bez obzira da li su se promenile koord.
             self.LabelEnemy.move(x, y)
-            #self.t = Thread(target=self.moveEnemy)
-            #self.t.daemon = True
-            #self.t.start()
 
-        # T4.start()
 
-        def updatePosition(self, x, y):
-            self.pX = x
-            self.pY = y
-            PixmapEnemy = QPixmap(self.Picture)
-            PixmapResizedEnemy = PixmapEnemy.scaled(self.EnemyWidth, self.EnemyHeight)
-            self.LabelEnemy.setPixmap(PixmapResizedEnemy)
-            self.LabelEnemy.move(x, y)
+
 
         def inTrap2(self):
             self.CanMove= False

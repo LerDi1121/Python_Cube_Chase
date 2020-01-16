@@ -39,20 +39,20 @@ class TrapAndForce(QFrame):
         self.TrapOrForce= tf
         self.Label = QLabel(parent)
         if self.TrapOrForce==2:
-            Pixmap = QPixmap("images\imgUtnik.png")
+            Pixmap = QPixmap("images\ihvhhjb.png")
         else:
             Pixmap = QPixmap("images\zamkaNeaktivna.png")
         PixmapResized = Pixmap.scaled(40,40)
         self.Label.setPixmap(PixmapResized)
         self.Label.move(self.pX, self.pY)
 
-    def deactive(self):
+    def deactive(self): # zamka
         Pixmap = QPixmap("images\zamkaNeaktivna.png")
         PixmapResized = Pixmap.scaled(40, 40)
         self.Label.setPixmap(PixmapResized)
         self.isActive = False
 
-    def active(self):
+    def active(self): #zamka
         if self.isActive==False:
             self.isActive= True
             Pixmap = QPixmap("images\zamkaAktivna.png")
@@ -61,7 +61,7 @@ class TrapAndForce(QFrame):
             thread1 = Thread(target=self.activeForThread)
             thread1.start()
 
-    def activeForThread(self):
+    def activeForThread(self): #zamka
         time.sleep(10)
         Pixmap = QPixmap("images\zamkaNeaktivna.png")
         PixmapResized = Pixmap.scaled(40, 40)
