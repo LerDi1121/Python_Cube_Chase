@@ -17,10 +17,11 @@ from collision_worker_traps import CollisionWorkerTrap
 
 class LavirintP(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, mainWind):
 
         super(LavirintP, self).__init__()
         self.InitStart()
+        self.MainWind= mainWind
         self.PlayerDict = []
         self.EnemyDict = []
         self.Traps = []
@@ -86,16 +87,12 @@ class LavirintP(QMainWindow):
 
 
     def defTraps(self):
-        fp = TrapAndForce(self, 1, 1)
-        fp1 = TrapAndForce(self, 2, 1)
-        fp2 = TrapAndForce(self, 3, 1)
-        fp3 = TrapAndForce(self, 4, 1)
-        fp4 = TrapAndForce(self, 5, 1)
-        self.Traps.append(fp)
-        self.Traps.append(fp1)
-        self.Traps.append(fp2)
-        self.Traps.append(fp3)
-        self.Traps.append(fp4)
+
+        self.Traps.append(TrapAndForce(self, 1, 1))
+        self.Traps.append(TrapAndForce(self, 2, 1))
+        self.Traps.append(TrapAndForce(self, 3, 1))
+        self.Traps.append(TrapAndForce(self, 4, 1))
+        self.Traps.append(TrapAndForce(self, 5, 1))
 
 
     def lblScore(self):
@@ -142,23 +139,40 @@ class LavirintP(QMainWindow):
     def gameOver(self):
         if self.PlayerDict[0].Live == 0:
             self.GameOver.setText("Player 2 wins!!!")
-        if self.PlayerDict[1].Live == 0:
+        elif self.PlayerDict[1].Live == 0:
             self.GameOver.setText("Player 1 wins!!!")
+        else:
+            if  self.PlayerDict[0].Score< self.PlayerDict[1].Score:
+                self.GameOver.setText("Player 2 wins!!!")
+            else:
+                self.GameOver.setText("Player 1 wins!!!")
         self.GameOver.resize(350, 60)
-        self.GameOver.move(300, 100)
+        self.GameOver.move(235, 100)
         self.GameOver.setStyleSheet("font: 40pt Comic Sans MS; color: red")
         time.sleep(5)
+        self.MainWind.show()
+        self.close_app()
+        app = QApplication.instance()
+        # app.quit()
 
     def newLevel(self):
-        if self.PlayerDict[0] != None:
-            self.PlayerDict[0].newLvl.emit()
-        if self.PlayerDict[1] != None:
-            self.PlayerDict[1].newLvl.emit()
-        self.EnemyDict[0].Speed=self.EnemyDict[0].Speed - 0.05
-        self.EnemyDict[1].Speed=self.EnemyDict[1].Speed - 0.05
-        self.map.wall()
-        self.lblPly1Score.setText("Level :" + str(self.Lvlcounter))
-        time.sleep(1)
+        if self.Lvlcounter <6:
+            if self.PlayerDict[0] != None:
+                self.PlayerDict[0].newLvl.emit()
+            if self.PlayerDict[1] != None:
+                self.PlayerDict[1].newLvl.emit()
+            self.defTraps()
+            self.EnemyDict[0].Speed=self.EnemyDict[0].Speed - 0.05
+            self.EnemyDict[1].Speed=self.EnemyDict[1].Speed - 0.05
+            if self.EnemyDict[0].Speed<0:
+                self.gameOver()
+
+            self.map.wall()
+            self.Lvlcounter= self.Lvlcounter + 1
+            self.LevelLbl.setText("Level :" + str(self.Lvlcounter))
+            time.sleep(1)
+        else:
+            self.gameOver()
 
     def timerEvent(self, event):
         if self.PlayerDict[0] != None:
@@ -230,3 +244,5 @@ class LavirintP(QMainWindow):
         if e.key() == Qt.Key_A:
             self.PlayerDict[1].left.emit()
             time.sleep(0.05)
+        if e.key() == Qt.Key_Escape:
+            self.close_app()

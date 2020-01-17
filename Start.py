@@ -16,7 +16,7 @@ class MainWindow(QWidget):
         self.initUI()
 
     def run(self):
-        self.LevelGen = LavirintP()
+        self.LevelGen = LavirintP(self)
         self.hide()
 
     def quit(self):
