@@ -16,12 +16,12 @@ class Map():
         "  X  XXX  X   X  X G",
         "G X  X X  X  XX XX G",
         "G    X             G",
-        "GG           GGGGGGG"
-    ]
+        "GG           GGGGGGG"]
+
     Walls = []
     Grass = []
     Space = []
-    Counter=0
+    Counter = 0
 
 
     def wall(self):
@@ -40,12 +40,11 @@ class Map():
                     coordX = x * 40 + 10
                     coordY = y * 40 + 10
                     Map.Grass.append((coordY, coordX))
-                   
                 if character == " ":
                     coordX = x * 40 + 10
                     coordY = y * 40 + 10
                     Map.Space.append((coordY, coordX))
-                    Map.Counter= Map.Counter+1
+                    Map.Counter = Map.Counter+1
 
 
 

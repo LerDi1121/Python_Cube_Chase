@@ -1,4 +1,4 @@
-"""vujadin"""
+
 from random import randint
 import time
 from threading import Thread
@@ -9,7 +9,6 @@ from PyQt5.QtGui import *
 
 import Map
 
-
 class Enemy(QFrame):
         EnemyWidth = 40
         EnemyHeight = 40
@@ -18,10 +17,10 @@ class Enemy(QFrame):
         LabelEnemy = 0
         Picture = ""
         Speed = 0.3
-        ID =0
-        CanMove= True
+        ID = 0
+        CanMove = True
         Move = pyqtSignal()
-        inTrap= pyqtSignal()
+        inTrap = pyqtSignal()
 
         def __init__(self, parent, x, y, picture, id):
             super().__init__(parent)
@@ -29,11 +28,11 @@ class Enemy(QFrame):
             self.initEnemy(parent, x, y, picture, id)
 
         def initEnemy(self, parent, x, y, picture, id):
-            self.resize(800, 600)
+            self.resize(40, 40)
             self.pX = x
             self.pY = y
             self.Picture = picture
-            self.ID=id
+            self.ID = id
             self.LabelEnemy = QLabel(parent)
             self.Move.connect(self.moveEnemy)
             self.inTrap.connect(self.inTrap2)
@@ -46,28 +45,21 @@ class Enemy(QFrame):
             self.LabelEnemy.move(x, y)
 
 
-
-
         def inTrap2(self):
             self.CanMove= False
             thread1 = Thread(target=self.inTrapforThread)
             thread1.start()
 
-
         def inTrapforThread(self):
             time.sleep(10)
             self.CanMove = True
 
-
-
-
-
         def changeCoord(self):
            while True:
-                val1 = randint(1,4)
-                val2 = randint(1,15)
+                val1 = randint(1, 4)
+                val2 = randint(1, 15)
                 if self.CanMove == True:
-                    if val1 % 4== 0:
+                    if val1 % 4 == 0:
                         for x in range(val2):
                             if self.pX > 10:
                                 if (self.pX-40, self.pY) not in Map.Map.Walls:
@@ -102,11 +94,5 @@ class Enemy(QFrame):
         def moveEnemy(self):
             self.LabelEnemy.move(self.pX, self.pY)
 
-
-
         def timerEvent(self, event):
             self.Move.emit()
-
-
-
-

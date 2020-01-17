@@ -7,16 +7,15 @@ from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal, QEventLoop, QTimer
 from PyQt5.QtGui import *
 from Map import *
 
-
 class TrapAndForce(QFrame):
-    pX=0
-    pY=0
-    picture= ""
-    TrapOrForce= 1
-    space=[]
-    isActive= False
-    deactiveTrap= pyqtSignal()
-    activeTrap= pyqtSignal()
+    pX = 0
+    pY = 0
+    picture = ""
+    TrapOrForce = 1
+    space = []
+    isActive = False
+    deactiveTrap = pyqtSignal()
+    activeTrap = pyqtSignal()
 
     def __init__(self, parent,  id, tf):  #poslednji param. je da li je sila ili zamka
         super().__init__(parent)
@@ -33,10 +32,10 @@ class TrapAndForce(QFrame):
                     self.space.append((coordY, coordX))
         val = randint(0,len(self.space))
         (self.pX,self.pY)= self.space[val]
-        self.ID= id
+        self.ID = id
         self.activeTrap.connect(self.active)
         self.deactiveTrap.connect(self.deactive)
-        self.TrapOrForce= tf
+        self.TrapOrForce = tf
         self.Label = QLabel(parent)
         if self.TrapOrForce==2:
             Pixmap = QPixmap("images\ihvhhjb.png")
@@ -68,9 +67,7 @@ class TrapAndForce(QFrame):
         self.Label.setPixmap(PixmapResized)
         self.isActive = False
 
-
     def activeForce(self):
-
         val = randint(0,len(self.space))
         (self.pX,self.pY)= self.space[val]
 
@@ -78,7 +75,6 @@ class TrapAndForce(QFrame):
         PixmapResized = Pixmap.scaled(40, 40)
         self.Label.setPixmap(PixmapResized)
         self.Label.move(self.pX, self.pY)
-
 
     def deactiveForce(self):
         Pixmap = QPixmap("images\zimggdfgdUpik.png")

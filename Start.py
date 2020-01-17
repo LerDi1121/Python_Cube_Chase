@@ -1,15 +1,10 @@
-
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QWidget, QApplication, QMainWindow, QDesktopWidget, QComboBox, QMessageBox
 from PyQt5.QtGui import QPixmap, QCursor
 from PyQt5.QtCore import Qt
 from LevelGenerator import LavirintP
-
 from Pumba import *
-
-
 import sys
-
 
 class MainWindow(QWidget):
     MainWindowHeight = 640
@@ -20,17 +15,12 @@ class MainWindow(QWidget):
 
         self.initUI()
 
-
-
     def run(self):
-        self.LevelGen= LavirintP()
+        self.LevelGen = LavirintP()
         self.hide()
-
 
     def quit(self):
         app = QApplication.instance()
-
-
 
     def initUI(self):
         self.initMainMenuButtons()
@@ -44,17 +34,14 @@ class MainWindow(QWidget):
         self.center()
         self.show()
 
-
     def center(self):
         screen = QDesktopWidget().screenGeometry()
         size = self.geometry()
         self.move(int((screen.width() - size.width()) / 2),int( (screen.height() - size.height()) / 2))
 
-
     def initMainMenuButtons(self):
         self.startButton = QtWidgets.QPushButton(self)
         self.startButton.setCursor(Qt.PointingHandCursor)
-        # self.startButton.setEnabled(False)
         self.startButton.setStyleSheet("border:1px solid rgb(220, 20, 60); color: gold;font-size: 24px; font-family: Comic Sans MS;");
         self.startButton.setText("START GAME")
         self.startButton.setGeometry(310, 280, 200, 50)

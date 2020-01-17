@@ -1,4 +1,4 @@
-"""vujadin"""
+
 from PyQt5.QtWidgets import QMainWindow, QFrame, QDesktopWidget, QApplication, QWidget, QHBoxLayout, QLabel
 from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal
 from PyQt5.QtGui import *
@@ -23,9 +23,8 @@ class Player(QFrame):
         down = pyqtSignal()
         left = pyqtSignal()
         right = pyqtSignal()
-        newLvl =  pyqtSignal()
-        Score=0
-       # parent=0
+        newLvl = pyqtSignal()
+        Score = 0
 
         def __init__(self, parent, x, y, picture,  id):
             super().__init__(parent)
@@ -33,13 +32,13 @@ class Player(QFrame):
             self.initPlayer(parent, x, y, picture,  id)
 
         def initPlayer(self, parent, x, y, picture,  id):
-            self.resize(800, 600)
+            self.resize(40, 40)
             self.pX = x
             self.pY = y
             self.startX = x
             self.startY = y
-            self.Live=3
-            self.ID =id
+            self.Live = 3
+            self.ID = id
             self.Picture = picture
 
             self.up.connect(self.move_up)
@@ -48,9 +47,8 @@ class Player(QFrame):
             self.right.connect(self.move_right)
             self.Dead.connect(self.deadPlayer)
             self.newLvl.connect(self.newLevel)
-            self.Score=0
-
-            self.Foots=[]
+            self.Score = 0
+            self.Foots = []
 
             for x in range(len(Map.Level)):
                 for y in range(len(Map.Level[x])):
@@ -63,7 +61,6 @@ class Player(QFrame):
                          PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
                          fp.setPixmap(PixmapResizedPlayer)
                          fp.move(coordY,coordX)
-
                          self.Foots.append((fp,(coordY,coordX)))
 
             self.LabelPlayer = QLabel(parent)
@@ -81,8 +78,8 @@ class Player(QFrame):
         def deadPlayer(self):
             if(self.Live - 1) >= 0:
                 self.Live = self.Live - 1
-                self.pX= self.startX
-                self.pY= self.startY
+                self.pX = self.startX
+                self.pY = self.startY
                 self.updatePosition(self.startX, self.startY)
                 self.Score = self.Score - 150
 
@@ -98,8 +95,6 @@ class Player(QFrame):
                 PixmapResizedPlayer = PixmapPlayer.scaled(self.PlayerWidth, self.PlayerHeight)
                 self.Foots[fp][0].setPixmap(PixmapResizedPlayer)
 
-
-
         def move_up(self):
             if self.CanMove == True:
                 newX = self.pX
@@ -111,7 +106,7 @@ class Player(QFrame):
                         self.update()
                         if (newX, newY) in Map.Space:
                             Map.Space.remove((newX, newY))
-                            Map.Counter= Map.Counter-1
+                            Map.Counter = Map.Counter-1
                             self.Score = self.Score+100
                             for fp in range(len(self.Foots)):
                                 if self.Foots[fp][1]==(newX,newY):
@@ -122,9 +117,6 @@ class Player(QFrame):
                                     self.Foots[fp][0].setPixmap(PixmapResizedPlayer)
                                     self.Foots[fp][0].move(newX, newY)
                                     self.updatePosition(newX, newY)
-
-
-
 
         def move_down(self):
             if self.CanMove == True:

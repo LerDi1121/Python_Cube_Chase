@@ -2,7 +2,6 @@ import math
 import time
 import multiprocessing as mp
 
-
 from Pumba import Enemy
 
 class CollisionProcess(mp.Process):
@@ -10,7 +9,7 @@ class CollisionProcess(mp.Process):
     def __init__(self, in_q : mp.Queue,out_q : mp.Queue, ):
         super().__init__(target=self.__work__, args=[in_q, out_q])
 
-    def __work__(self, in_q: mp.Queue, out_q: mp.Queue ):
+    def __work__(self, in_q: mp.Queue, out_q: mp.Queue):
 
         while True:
             temp= False

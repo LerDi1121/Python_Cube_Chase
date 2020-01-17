@@ -15,32 +15,25 @@ from collision_worker_trap_enemy import CollisionWorkerTrapEnemy
 from collision_worker_traps import CollisionWorkerTrap
 
 
-
-
 class LavirintP(QMainWindow):
 
     def __init__(self):
 
-
         super(LavirintP, self).__init__()
         self.InitStart()
         self.PlayerDict = []
-        self.EnemyDict=[]
-        self.Traps=[]
+        self.EnemyDict = []
+        self.Traps = []
         self.defTraps()
-        #trap = TrapAndForce(self,10,10, 1,1)
         self.createPlayerAndEnemy()
-        self.lblPly1Score= QLabel(self)
+        self.lblPly1Score = QLabel(self)
         self.GameOver = QLabel(self)
         self.lblPly2Score = QLabel(self)
-        self.Lvlcounter=1
+        self.Lvlcounter = 1
         self.LevelLbl = QLabel(self)
         self.lblScore()
-
         self.map = Map()
-
         self.map.wall()
-
         self.force = TrapAndForce(self, 1, 2)
 
         self.in_queue = Queue() #za koliziju igraca i neprijatelja
@@ -49,6 +42,7 @@ class LavirintP(QMainWindow):
         self.out_queue_trap = Queue()
         self.in_queue_trap_enemy = Queue() #za koliziju kad neprijatelj predje preko zamke
         self.out_queue_trap_enemy = Queue()
+
         #enemy and ply
         self.playerProcess = CollisionProcess(self.in_queue, self.out_queue)
         self.playerProcess.start()
@@ -62,6 +56,7 @@ class LavirintP(QMainWindow):
         self.TrapEnemyCollisionWorker = CollisionWorkerTrap(self.PlayerDict, self.Traps, self.in_queue_trap, self.out_queue_trap)
         self.TrapEnemyCollisionWorker.update.connect(self.close_app)
         self.TrapEnemyCollisionWorker.start()
+
         # enemy and traps
         self.TrapActiveProcess = CollisionProcessTrapEnemy(self.in_queue_trap_enemy, self.out_queue_trap_enemy)
         self.TrapActiveProcess.start()
@@ -86,16 +81,16 @@ class LavirintP(QMainWindow):
         self.threadForce.daemon = True
         self.threadForce.start()
 
-        self.UsedSpace=[]
+        self.UsedSpace = []
         self.show()
 
 
     def defTraps(self):
-        fp= TrapAndForce(self ,1,1)
+        fp = TrapAndForce(self, 1, 1)
         fp1 = TrapAndForce(self, 2, 1)
-        fp2= TrapAndForce(self, 3, 1)
-        fp3 = TrapAndForce(self,4,1)
-        fp4 = TrapAndForce(self, 5,1)
+        fp2 = TrapAndForce(self, 3, 1)
+        fp3 = TrapAndForce(self, 4, 1)
+        fp4 = TrapAndForce(self, 5, 1)
         self.Traps.append(fp)
         self.Traps.append(fp1)
         self.Traps.append(fp2)
@@ -135,7 +130,6 @@ class LavirintP(QMainWindow):
             self.force.deactiveForce()
             time.sleep(5)
 
-
     def level(self):
         while True:
             if Map.Counter==0:
@@ -144,7 +138,6 @@ class LavirintP(QMainWindow):
                 self.gameOver()
 
             time.sleep(0.2)
-
 
     def gameOver(self):
         if self.PlayerDict[0].Live == 0:
@@ -155,7 +148,6 @@ class LavirintP(QMainWindow):
         self.GameOver.move(300, 100)
         self.GameOver.setStyleSheet("font: 40pt Comic Sans MS; color: red")
         time.sleep(5)
-        #self.hide()
 
     def newLevel(self):
         if self.PlayerDict[0] != None:
@@ -170,9 +162,9 @@ class LavirintP(QMainWindow):
 
     def timerEvent(self, event):
         if self.PlayerDict[0] != None:
-            self.lblPly1Score.setText("Player 1:" + str(self.PlayerDict[0].Score)+ " Lives: " +str(self.PlayerDict[0].Live))
+            self.lblPly1Score.setText("Player 1:" + str(self.PlayerDict[0].Score)+ " Lives: " + str(self.PlayerDict[0].Live))
         if self.PlayerDict[1] != None:
-            self.lblPly2Score.setText("Player 2:" + str(self.PlayerDict[1].Score) + " Lives: " +str(self.PlayerDict[1].Live))
+            self.lblPly2Score.setText("Player 2:" + str(self.PlayerDict[1].Score) + " Lives: " + str(self.PlayerDict[1].Live))
 
     def InitStart(self):
         self.resize(820, 680)
@@ -180,7 +172,6 @@ class LavirintP(QMainWindow):
         self.setWindowTitle("Cub Chase")
         self.center()
         hbox = QHBoxLayout(self)
-
         pixmap = QPixmap('images\imgBackground2.png')
         lbl = QLabel(self)
         lbl.setPixmap(pixmap)
@@ -189,22 +180,16 @@ class LavirintP(QMainWindow):
         self.resize(pixmap.width(), pixmap.height()+60)
         self.setLayout(hbox)
 
-
     def createPlayerAndEnemy(self):
-
-        self.PlayerDict.append( Player(self, 770, 570, 'images\Simba.png', 0))
-        self.PlayerDict.append( Player(self, 10, 570, 'images\imgNala.png', 1))
+        self.PlayerDict.append(Player(self, 770, 570, 'images\Simba.png', 0))
+        self.PlayerDict.append(Player(self, 10, 570, 'images\imgNala.png', 1))
         self.EnemyDict.append(Enemy(self, 10, 10, 'images\imgTimon.png',0))
         self.EnemyDict.append(Enemy(self, 770, 10, 'images\pumba.png',1))
-
-
-
 
     def center(self):
         screen = QDesktopWidget().screenGeometry()
         size = self.geometry()
         self.move(int((screen.width() - size.width()) / 2),int( (screen.height() - size.height()) / 2))
-
 
     def close_app(self):
         self.playerCollisionWorker.ind =False
@@ -220,10 +205,7 @@ class LavirintP(QMainWindow):
         self.TrapEnemyProcess.terminate()
         self.close()
 
-
-
-
-    def keyPressEvent(self, e : QKeyEvent):
+    def keyPressEvent(self, e: QKeyEvent):
         if e.key() == Qt.Key_Up:
             self.PlayerDict[0].up.emit()
             time.sleep(0.05)
@@ -248,8 +230,3 @@ class LavirintP(QMainWindow):
         if e.key() == Qt.Key_A:
             self.PlayerDict[1].left.emit()
             time.sleep(0.05)
-
-
-
-
-
