@@ -21,6 +21,7 @@ class MainWindow(QWidget):
 
     def quit(self):
         app = QApplication.instance()
+        app.exit()
 
     def initUI(self):
         self.initMainMenuButtons()
@@ -53,6 +54,11 @@ class MainWindow(QWidget):
         self.quitButton.setText("EXIT TO DESKTOP")
         self.quitButton.setGeometry(285, 360, 250, 50)
         self.quitButton.clicked.connect(self.quit)
+
+    def keyPressEvent(self, e: QKeyEvent):
+        if e.key() == Qt.Key_Escape:
+            app = QApplication.instance()
+            app.exit()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
